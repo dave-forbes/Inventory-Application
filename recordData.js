@@ -1,6 +1,7 @@
 const recordData = [
   [
     "The Score",
+    "Fugees",
     [
       "Red Intro",
       "How Many Mics",
@@ -25,6 +26,7 @@ const recordData = [
   ],
   [
     "Enter The Wu-Tang (36 Chambers)",
+    "Wu-Tang Clan",
     [
       "Bring Da Ruckus",
       "Shame On A Nigga",
@@ -47,6 +49,7 @@ const recordData = [
   ],
   [
     "The Low End Theory",
+    "A Tribe Called Quest",
     [
       "Excursions",
       "Buggin' Out",
@@ -69,6 +72,7 @@ const recordData = [
   ],
   [
     "Black Sunday",
+    "Cypress Hill",
     [
       "I Wanna Get High",
       "I Ain't Goin' Out Like That",
@@ -91,6 +95,7 @@ const recordData = [
   ],
   [
     "Doggystyle",
+    "Snoop Dogg",
     [
       "Bathtub",
       "G Funk Intro",
@@ -114,6 +119,7 @@ const recordData = [
   ],
   [
     "The Infamous",
+    "Mobb Deep",
     [
       "The Start of Your Ending (41st Side)",
       "The Infamous Prelude",
@@ -138,6 +144,7 @@ const recordData = [
   ],
   [
     "Ready to Die",
+    "Notorious B.I.G.",
     [
       "Intro",
       "Things Done Changed",
@@ -163,6 +170,7 @@ const recordData = [
   ],
   [
     "Aquemini",
+    "Outkast",
     [
       "Hold On, Be Strong",
       "Return of the 'G'",
@@ -186,6 +194,7 @@ const recordData = [
   ],
   [
     "The Miseducation of Lauryn Hill",
+    "Lauryn Hill",
     [
       "Intro",
       "Lost Ones",
@@ -210,6 +219,7 @@ const recordData = [
   ],
   [
     "Highway 61 Revisited",
+    "Bob Dylan",
     [
       "Like a Rolling Stone",
       "Tombstone Blues",
@@ -228,6 +238,7 @@ const recordData = [
   ],
   [
     "Blue",
+    "Joni Mitchell",
     [
       "All I Want",
       "My Old Man",
@@ -246,6 +257,7 @@ const recordData = [
   ],
   [
     "Sweet Baby James",
+    "James Taylor",
     [
       "Sweet Baby James",
       "Lo and Behold",
@@ -265,6 +277,7 @@ const recordData = [
   ],
   [
     "Bridge Over Troubled Water",
+    "Simon & Garfunkel",
     [
       "Bridge over Troubled Water",
       "El Condor Pasa (If I Could)",
@@ -284,6 +297,7 @@ const recordData = [
   ],
   [
     "Kind of Blue",
+    "Miles Davis",
     [
       "So What",
       "Freddie Freeloader",
@@ -296,7 +310,21 @@ const recordData = [
     1959,
   ],
   [
+    "A Love Supreme",
+    "John Coltrane",
+    [
+      "Part I: Acknowledgement",
+      "Part II: Resolution",
+      "Part III: Pursuance",
+      "Part IV: Psalm",
+    ],
+    "Jazz",
+    "John_Coltrane_-_A_Love_Supreme.jpeg",
+    1965,
+  ],
+  [
     "Ella Fitzgerald Sings the Cole Porter Song Book",
+    "Ella Fitzgerald",
     [
       "All Through the Night",
       "Anything Goes",
@@ -313,6 +341,7 @@ const recordData = [
   ],
   [
     "Live at the Apollo",
+    "James Brown",
     [
       "Introduction to James Brown and The Famous Flames",
       "I'll Go Crazy",
@@ -328,6 +357,7 @@ const recordData = [
   ],
   [
     "Songs in the Key of Life",
+    "Steve Wonder",
     [
       "Love's in Need of Love Today",
       "Have a Talk with God",
@@ -357,6 +387,7 @@ const recordData = [
   ],
   [
     "What's Going On",
+    "Marvin Gaye",
     [
       "What's Going On",
       "What's Happening Brother",
@@ -374,6 +405,7 @@ const recordData = [
   ],
   [
     "Lady Soul",
+    "Aretha Franklin",
     [
       "Chain of Fools",
       "Money",
@@ -392,6 +424,7 @@ const recordData = [
   ],
   [
     "Gratitude",
+    "Earth, Wind & Fire",
     [
       "Introduction by MC Perry Jones",
       "Africano / Power",
@@ -412,6 +445,7 @@ const recordData = [
   ],
   [
     "Purple Rain",
+    "Prince",
     [
       "Let's Go Crazy",
       "Take Me with U",
@@ -429,6 +463,7 @@ const recordData = [
   ],
   [
     "Superfly",
+    "Curtis Mayfield",
     [
       "Little Child Runnin' Wild",
       "Pusherman",
@@ -446,6 +481,7 @@ const recordData = [
   ],
   [
     "Autobahn",
+    "Kraftwerk",
     [
       "Autobahn",
       "Kometenmelodie 1",
@@ -459,6 +495,7 @@ const recordData = [
   ],
   [
     "Selected Ambient Works 85-92",
+    "Aphex Twin",
     [
       "Xtal",
       "Tha",
@@ -480,6 +517,7 @@ const recordData = [
   ],
   [
     "Mezzanine",
+    "Massive Attack",
     [
       "Angel",
       "Risingson",
@@ -499,6 +537,7 @@ const recordData = [
   ],
   [
     "Violator",
+    "Depeche Mode",
     [
       "World in My Eyes",
       "Sweetest Perfection",
@@ -516,6 +555,7 @@ const recordData = [
   ],
   [
     "Dummy",
+    "Portishead",
     [
       "Mysterons",
       "Sour Times",
@@ -534,6 +574,7 @@ const recordData = [
   ],
   [
     "Music for Airports",
+    "Brian Eno",
     ["1/1", "2/1", "1/2", "2/2"],
     "Electronic",
     "Music_for_Airports.jpeg",
@@ -541,6 +582,7 @@ const recordData = [
   ],
   [
     "Abbey Road",
+    "The Beatles",
     [
       "Come Together",
       "Something",
@@ -566,6 +608,7 @@ const recordData = [
   ],
   [
     "Exile on Main St.",
+    "The Rolling Stones",
     [
       "Rocks Off",
       "Rip This Joint",
@@ -592,6 +635,7 @@ const recordData = [
   ],
   [
     "Rumours",
+    "Fleetwood Mac",
     [
       "Second Hand News",
       "Dreams",
@@ -611,6 +655,7 @@ const recordData = [
   ],
   [
     "Led Zeppelin IV",
+    "Led Zeppelin",
     [
       "Black Dog",
       "Rock and Roll",
@@ -627,6 +672,7 @@ const recordData = [
   ],
   [
     "Are You Experienced",
+    "Jimi Hendrix",
     [
       "Purple Haze",
       "Manic Depression",
@@ -646,6 +692,7 @@ const recordData = [
   ],
   [
     "A Night at the Opera",
+    "Queen",
     [
       "Death on Two Legs (Dedicated to...)",
       "Lazing on a Sunday Afternoon",
@@ -666,6 +713,7 @@ const recordData = [
   ],
   [
     "Disraeli Gears",
+    "Cream",
     [
       "Strange Brew",
       "Sunshine of Your Love",
