@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const RecordInstanceSchema = new Schema({
+const RecordCopySchema = new Schema({
   record: { type: Schema.Types.ObjectId, ref: "Record", required: true },
   condition: {
     type: String,
@@ -11,8 +11,8 @@ const RecordInstanceSchema = new Schema({
   price: { type: String, required: true },
 });
 
-RecordInstanceSchema.virtual("url").get(function () {
-  return `/catalog/recordinstance/${this._id}`;
+RecordCopySchema.virtual("url").get(function () {
+  return `/catalog/recordcopy/${this._id}`;
 });
 
-module.exports = mongoose.model("RecordInstance", RecordInstanceSchema);
+module.exports = mongoose.model("RecordCopy", RecordCopySchema);
