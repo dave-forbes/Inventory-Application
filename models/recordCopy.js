@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const RecordCopySchema = new Schema({
   record: { type: Schema.Types.ObjectId, ref: "Record", required: true },
+  catalogNum: { type: Number, required: true },
   condition: {
     type: String,
     enum: ["Poor", "Fair", "Good", "New"],
