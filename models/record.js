@@ -9,7 +9,7 @@ const RecordSchema = new Schema({
   genre: [{ type: Schema.Types.ObjectId, ref: "Genre" }],
   format: { type: Schema.Types.ObjectId, ref: "Format", required: true },
   img: { type: String },
-  release_date: { type: Date, default: Date.now },
+  year: { type: Number },
 });
 
 RecordSchema.virtual("url").get(function () {
