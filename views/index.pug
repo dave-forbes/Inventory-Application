@@ -1,5 +1,43 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div(class='layout-grid')
+    div(class='side-nav')
+      ul
+        h3 Genre
+        li Rock
+        li Pop 
+        li Electronic
+        li All
+      ul
+        h3 Format 
+        li Single 
+        li Album 
+        li 12"
+        li All
+      ul 
+        h3 Country 
+        li UK 
+        li USA 
+        li France 
+        li All 
+      ul 
+        h3 Year 
+        li 2020
+        li 2010
+        li 2000
+        li All
+    div(class='record-grid')
+      h1= title
+      if record_list.length
+        ul
+          each record in record_list
+            li
+              img(src=record.img, alt='Description of the image')
+              p #{record.title}
+              p #{record.artist.name}
+              p #{record.genre.name}
+              p #{record.year}
+      else
+        p There are no books.
+    
