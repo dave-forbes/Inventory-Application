@@ -171,9 +171,9 @@ async function createRecords() {
     await recordCreate(
       i,
       recordData[i][0],
-      recordData[i][1],
+      artists.find((item) => item.name === recordData[i][1]),
       recordData[i][2],
-      recordData[i][3],
+      genres.find((item) => item.name === recordData[i][3]),
       formats[0],
       recordData[i][4],
       recordData[i][5]
