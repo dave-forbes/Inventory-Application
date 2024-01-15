@@ -173,9 +173,10 @@ async function createRecords() {
       recordData[i][0],
       recordData[i][1],
       recordData[i][2],
-      formats[0],
       recordData[i][3],
-      recordData[i][4]
+      formats[0],
+      recordData[i][4],
+      recordData[i][5]
     );
   }
 }
