@@ -214,7 +214,7 @@ const recordData = [
       "Tell Him",
     ],
     "Hip Hop",
-    "public/images/themiseducationoflaurynhill.jpeg",
+    "themiseducationoflaurynhill.jpeg",
     1998,
   ],
   [
