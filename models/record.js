@@ -6,7 +6,7 @@ const RecordSchema = new Schema({
   title: { type: String, required: true },
   artist: { type: Schema.Types.ObjectId, ref: "Artist", required: true },
   tracklist: [{ type: String, required: true }],
-  genre: [{ type: Schema.Types.ObjectId, ref: "Genre" }],
+  genre: { type: Schema.Types.ObjectId, ref: "Genre" },
   format: { type: Schema.Types.ObjectId, ref: "Format", required: true },
   img: { type: String },
   year: { type: Number },
