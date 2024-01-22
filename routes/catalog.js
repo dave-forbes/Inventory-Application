@@ -90,8 +90,8 @@ router.get("/record/create", record_controller.record_create_get);
 
 // /// BOOKINSTANCE ROUTES ///
 
-// // GET request for creating a record copy. NOTE This must come before route that displays RecordCopy (uses id).
-// router.get("/recordcopy/create", record_copy_controller.recordcopy_create_get);
+// GET request for creating a record copy. NOTE This must come before route that displays RecordCopy (uses id).
+router.get("/recordcopy/create", record_copy_controller.recordcopy_create_get);
 
 // // POST request for creating recordcopy.
 // router.post(
