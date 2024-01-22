@@ -3,6 +3,7 @@ const Artist = require("../models/artist");
 const Genre = require("../models/genre");
 const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
+const Format = require("../models/format");
 
 // Display list of all records.
 exports.index = asyncHandler(async (req, res, next) => {
