@@ -8,9 +8,9 @@ block content
   div.nav
     div.links
         a.focus New Record
-        a New Record Copy
-        a New Artist
-        a New Genre 
+        a(href='/catalog/recordcopy/create') New Record Copy
+        a(href='/catalog/artist/create') New Artist
+        a(href='/catalog/genre/create') New Genre 
   form(method='POST')
     h1.form-title New Record
     div.input-group
