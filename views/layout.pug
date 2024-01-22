@@ -3,6 +3,7 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    block styles
   body
   header
     div(class='header-content')
@@ -10,8 +11,8 @@ html
         h1 Wax Nostalgia
         h2 Inventory 
       div
-        a all 
-        a new
+        a(href='/catalog') all
+        a(href='/catalog/record/create') new
         a search
   div(class='main-content')
     block content
