@@ -1,20 +1,17 @@
-const Record = require("../models/record");
+const RecordCopy = require("../models/recordCopy");
 const Artist = require("../models/artist");
 const Genre = require("../models/genre");
 const asyncHandler = require("express-async-handler");
+const Record = require("../models/record");
 
 // Display list of all records.
 exports.index = asyncHandler(async (req, res, next) => {
-  const allRecords = await Record.find()
-    .sort({ title: 1 })
-    .populate("artist")
-    .populate("genre")
-    .exec();
+  const allRecordCopies = await RecordCopy.find().populate("record").exec();
   const allGenres = await Genre.find().sort({ name: 1 }).exec();
   const allYears = await Record.distinct("year");
 
   res.render("index", {
-    record_list: allRecords,
+    recordCopies: allRecordCopies,
     years: allYears,
     genres: allGenres,
   });
