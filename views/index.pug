@@ -14,12 +14,13 @@ block content
         else
           p There are no genres.
       ul 
-        h3 Year 
-        if years.length
-            each year in years
-               a(href=`/catalog/year/${year}`) #{year}
-        else
-          p There are no records.    
+        h3 Decade  
+        a(href=`/catalog/year/1950`) 1950
+        a(href=`/catalog/year/1960`) 1960
+        a(href=`/catalog/year/1970`) 1970
+        a(href=`/catalog/year/1980`) 1980
+        a(href=`/catalog/year/1990`) 1990
+        a(href=`/catalog/year/2000`) 2000
       ul
         h3 Format 
         a Single 

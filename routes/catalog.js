@@ -6,6 +6,7 @@ const record_controller = require("../controllers/recordController");
 const artist_controller = require("../controllers/artistController");
 const genre_controller = require("../controllers/genreController");
 const record_copy_controller = require("../controllers/recordCopyController");
+const year_controller = require("../controllers/yearController");
 
 /// BOOK ROUTES ///
 
@@ -82,8 +83,8 @@ router.get("/genre/create", genre_controller.genre_create_get);
 // // POST request to update Genre.
 // router.post("/genre/:id/update", genre_controller.genre_update_post);
 
-// // GET request for one Genre.
-// router.get("/genre/:id", genre_controller.genre_detail);
+// GET request for one Genre.
+router.get("/genre/:id", genre_controller.genre_detail);
 
 // // GET request for list of all Genre.
 // router.get("/genres", genre_controller.genre_list);
@@ -128,5 +129,7 @@ router.get("/recordcopy/:id", record_copy_controller.recordcopy_detail);
 
 // // GET request for list of all recordcopy.
 // router.get("/recordcopies", record_copy_controller.recordcopy_list);
+
+router.get("/year/:id", year_controller.year_list);
 
 module.exports = router;
