@@ -13,32 +13,32 @@ const record_copy_controller = require("../controllers/recordCopyController");
 router.get("/", record_controller.index);
 
 // GET request for creating a Book. NOTE This must come before routes that display Book (uses id).
-router.get("/book/create", record_controller.book_create_get);
+router.get("/record/create", record_controller.record_create_get);
 
 // POST request for creating Book.
-router.post("/book/create", record_controller.book_create_post);
+router.post("/record/create", record_controller.record_create_post);
 
 // GET request to delete Book.
-router.get("/book/:id/delete", record_controller.book_delete_get);
+router.get("/record/:id/delete", record_controller.record_delete_get);
 
 // POST request to delete Book.
-router.post("/book/:id/delete", record_controller.book_delete_post);
+router.post("/record/:id/delete", record_controller.record_delete_post);
 
 // GET request to update Book.
-router.get("/book/:id/update", record_controller.book_update_get);
+router.get("/record/:id/update", record_controller.record_update_get);
 
-// POST request to update Book.
-router.post("/book/:id/update", record_controller.book_update_post);
+// POST request to update record.
+router.post("/record/:id/update", record_controller.record_update_post);
 
-// GET request for one Book.
-router.get("/book/:id", record_controller.book_detail);
+// GET request for one record.
+router.get("/record/:id", record_controller.record_detail);
 
-// GET request for list of all Book items.
-router.get("/books", record_controller.book_list);
+// GET request for list of all record items.
+// router.get("/records", record_controller.record_list);
 
 /// AUTHOR ROUTES ///
 
-// GET request for creating Author. NOTE This must come before route for id (i.e. display author).
+// GET request for creating Artist. NOTE This must come before route for id (i.e. display artist).
 router.get("/author/create", artist_controller.artist_create_get);
 
 // POST request for creating artist.
@@ -90,46 +90,43 @@ router.get("/genres", genre_controller.genre_list);
 
 /// BOOKINSTANCE ROUTES ///
 
-// GET request for creating a BookInstance. NOTE This must come before route that displays BookInstance (uses id).
-router.get(
-  "/bookinstance/create",
-  record_copy_controller.bookinstance_create_get
-);
+// GET request for creating a record copy. NOTE This must come before route that displays RecordCopy (uses id).
+router.get("/recordcopy/create", record_copy_controller.recordcopy_create_get);
 
-// POST request for creating BookInstance.
+// POST request for creating recordcopy.
 router.post(
-  "/bookinstance/create",
-  record_copy_controller.bookinstance_create_post
+  "/recordcopy/create",
+  record_copy_controller.recordcopy_create_post
 );
 
-// GET request to delete BookInstance.
+// GET request to delete recordcopy.
 router.get(
-  "/bookinstance/:id/delete",
-  record_copy_controller.bookinstance_delete_get
+  "/recordcopy/:id/delete",
+  record_copy_controller.recordcopy_delete_get
 );
 
-// POST request to delete BookInstance.
+// POST request to delete recordcopy.
 router.post(
-  "/bookinstance/:id/delete",
-  record_copy_controller.bookinstance_delete_post
+  "/recordcopy/:id/delete",
+  record_copy_controller.recordcopy_delete_post
 );
 
-// GET request to update BookInstance.
+// GET request to update recordcopy.
 router.get(
-  "/bookinstance/:id/update",
-  record_copy_controller.bookinstance_update_get
+  "/recordcopy/:id/update",
+  record_copy_controller.recordcopy_update_get
 );
 
-// POST request to update BookInstance.
+// POST request to update recordcopy.
 router.post(
-  "/bookinstance/:id/update",
-  record_copy_controller.bookinstance_update_post
+  "/recordcopy/:id/update",
+  record_copy_controller.recordcopy_update_post
 );
 
-// GET request for one BookInstance.
-router.get("/bookinstance/:id", record_copy_controller.bookinstance_detail);
+// GET request for one recordcopy.
+router.get("/recordcopy/:id", record_copy_controller.recordcopy_detail);
 
-// GET request for list of all BookInstance.
-router.get("/bookinstances", record_copy_controller.bookinstance_list);
+// GET request for list of all recordcopy.
+router.get("/recordcopies", record_copy_controller.recordcopy_list);
 
 module.exports = router;
