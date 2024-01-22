@@ -9,10 +9,15 @@ exports.index = asyncHandler(async (req, res, next) => {
     .sort({ title: 1 })
     .populate("artist")
     .populate("genre")
-    .limit(18)
     .exec();
+  const allGenres = await Genre.find().sort({ name: 1 }).exec();
+  const allYears = await Record.distinct("year");
 
-  res.render("index", { record_list: allRecords });
+  res.render("index", {
+    record_list: allRecords,
+    years: allYears,
+    genres: allGenres,
+  });
 });
 
 // Display record create form on GET.
