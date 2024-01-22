@@ -1,0 +1,19 @@
+extends layout
+
+block styles  
+  link(rel='stylesheet', href='/stylesheets/views/record_create.css')
+  block styles
+
+block content
+  div.nav
+    div.links
+        a(href='/catalog/record/create') New Record
+        a(href='/catalog/recordcopy/create') New Record Copy
+        a(href='/catalog/artist/create') New Artist
+        a.focus New Genre 
+  form(method='POST')
+    h1.form-title New Genre
+    div.input-group
+      label Genre Name 
+      input(type='text', name='genre', maxlength='12', placeholder='--Please enter the genre name--', required)
+    button.submit-button(type='submit') Submit 
