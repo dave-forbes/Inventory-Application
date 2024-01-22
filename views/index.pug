@@ -5,28 +5,22 @@ block content
     div(class='side-nav')
       ul
         h3 Genre
-        a Rock
-        a Pop 
-        a Electronic
-        a All
+        if genres.length
+            each genre in genres
+               a(href=genre.url) #{genre.name}
+        else
+          p There are no genres.
+      ul 
+        h3 Year 
+        if years.length
+            each year in years
+               a(href=`/catalog/year/${year}`) #{year}
+        else
+          p There are no records.    
       ul
         h3 Format 
         a Single 
-        a Album 
-        a 12"
-        a All
-      ul 
-        h3 Country 
-        a UK 
-        a USA 
-        a France 
-        a All 
-      ul 
-        h3 Year 
-        a 2020
-        a 2010
-        a 2000
-        a All
+        a Album
     div(class='record-grid')
       h1= title
       if record_list.length
