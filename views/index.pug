@@ -23,15 +23,14 @@ block content
         a Album
     div(class='record-grid')
       h1= title
-      if record_list.length
+      if recordCopies.length
         ul
-          each record in record_list
+          each recordCopy in recordCopies
             li
-              img(src=record.img, alt='Description of the image')
-              p #{record.title}
-              p #{record.artist.name}
-              p #{record.genre.name}
-              p #{record.year}
+              img(src=recordCopy.record.img, alt='Description of the image')
+              p #{recordCopy.record.title}
+              p #{recordCopy.record.year}
+              p £#{recordCopy.price}
       else
-        p There are no books.
+        p There are no records.
     
