@@ -88,6 +88,10 @@ ul {
   border-radius: 5px;
   overflow: hidden;
   background-color: #FFF;
+  display: grid;
+  height: 250px;
+  justify-items: center;
+  text-align: center;
 }
 
 img {
