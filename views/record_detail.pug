@@ -1,0 +1,24 @@
+extends layout 
+
+block styles  
+  link(rel='stylesheet', href='/stylesheets/views/detail.css')
+
+block content 
+  div.detail-grid
+    img.detail-img(src=record.img, alt='Description of the image')
+    div.detail-info
+      p #[strong Title:] 
+        a(href=record.url) #{record.title} 
+      p #[strong Artist:] 
+        a(href=record.artist.url) #{record.artist.name}
+      div
+        p #[strong Tracklist:]
+        ol 
+          each track in record.tracklist
+            li #{track}
+      p #[strong Genre:] #{record.genre.name}
+      p #[strong Format:] #{record.format.name}
+      p #[strong Year Released:] #{record.year}
+    div.detail-links
+      a.detail-update Update 
+      a.detail-delete Delete

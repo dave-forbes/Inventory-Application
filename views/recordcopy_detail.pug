@@ -1,0 +1,20 @@
+extends layout 
+
+block styles  
+  link(rel='stylesheet', href='/stylesheets/views/detail.css')
+
+block content 
+  div.detail-grid
+    img.detail-img(src=recordCopy.record.img, alt='Description of the image')
+    div.detail-info
+      p #[strong Title:] 
+        a(href=recordCopy.record.url) #{recordCopy.record.title} 
+      p #[strong Artist:] 
+        a(href=artist.url) #{artist.name}
+      p #[strong Catalog Number:] #{recordCopy.catalogNum}
+      p #[strong Condition:] #{recordCopy.condition}
+      p #[strong Price:] £#{recordCopy.price}
+    div.detail-links
+      a.detail-update Update 
+      a.detail-delete Delete
+      

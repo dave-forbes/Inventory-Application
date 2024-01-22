@@ -30,8 +30,8 @@ router.get("/record/create", record_controller.record_create_get);
 // // POST request to update record.
 // router.post("/record/:id/update", record_controller.record_update_post);
 
-// // GET request for one record.
-// router.get("/record/:id", record_controller.record_detail);
+// GET request for one record.
+router.get("/record/:id", record_controller.record_detail);
 
 // GET request for list of all record items.
 // router.get("/records", record_controller.record_list);
@@ -123,8 +123,8 @@ router.get("/recordcopy/create", record_copy_controller.recordcopy_create_get);
 //   record_copy_controller.recordcopy_update_post
 // );
 
-// // GET request for one recordcopy.
-// router.get("/recordcopy/:id", record_copy_controller.recordcopy_detail);
+// GET request for one recordcopy.
+router.get("/recordcopy/:id", record_copy_controller.recordcopy_detail);
 
 // // GET request for list of all recordcopy.
 // router.get("/recordcopies", record_copy_controller.recordcopy_list);

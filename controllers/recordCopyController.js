@@ -1,16 +1,32 @@
 const RecordCopy = require("../models/recordCopy");
 const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
+const Artist = require("../models/artist");
 
 // // Display list of all RecordCopies.
 // exports.recordcopy_list = asyncHandler(async (req, res, next) => {
 //   res.send("NOT IMPLEMENTED: RecordCopy list");
 // });
 
-// // Display detail page for a specific RecordCopy.
-// exports.recordcopy_detail = asyncHandler(async (req, res, next) => {
-//   res.send(`NOT IMPLEMENTED: RecordCopy detail: ${req.params.id}`);
-// });
+// Display detail page for a specific RecordCopy.
+exports.recordcopy_detail = asyncHandler(async (req, res, next) => {
+  const recordCopy = await RecordCopy.findById(req.params.id)
+    .populate("record")
+    .exec();
+  const artist = await Artist.findById(recordCopy.record.artist);
+
+  if (recordCopy === null) {
+    // No results.
+    const err = new Error("Book copy not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("recordcopy_detail", {
+    artist: artist,
+    recordCopy: recordCopy,
+  });
+});
 
 // Display RecordCopy create form on GET.
 exports.recordcopy_create_get = asyncHandler(async (req, res, next) => {
