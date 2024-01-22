@@ -1,4 +1,6 @@
 const Record = require("../models/record");
+const Artist = require("../models/artist");
+const Genre = require("../models/genre");
 const asyncHandler = require("express-async-handler");
 
 // Display list of all records.
@@ -15,8 +17,12 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Display record create form on GET.
 exports.record_create_get = asyncHandler(async (req, res, next) => {
+  const [allArtists, allGenres] = await Promise.all([
+    Artist.find().sort({ name: 1 }).exec(),
+    Genre.find().sort({ name: 1 }).exec(),
+  ]);
   res.render("record_create", {
-    artists: ["artist1", "artist2", "artist3"],
-    formats: ["format1", "format2"],
+    artists: allArtists,
+    genres: allGenres,
   });
 });
