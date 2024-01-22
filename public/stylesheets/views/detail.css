@@ -17,6 +17,11 @@
   height: auto;
 }
 
+.small-detail-img {
+  width: 50px;
+  height: auto;
+}
+
 .detail-info {
   display: grid;
   height: 100%;
@@ -58,6 +63,29 @@
   background-color: aquamarine;
 }
 
-ol {
+.tracks {
   padding: 0 2rem;
+}
+
+.detail-copies-in-stock {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 80vw;
+}
+
+.detail-copies-in-stock a {
+  color: black;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 800;
+  font-family: 'Jura', sans-serif;
+  border-radius: 5px;
+  width: 100px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }

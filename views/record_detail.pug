@@ -13,7 +13,7 @@ block content
         a(href=record.artist.url) #{record.artist.name}
       div
         p #[strong Tracklist:]
-        ol 
+        ol.tracks 
           each track in record.tracklist
             li #{track}
       p #[strong Genre:] #{record.genre.name}
@@ -22,3 +22,13 @@ block content
     div.detail-links
       a.detail-update Update 
       a.detail-delete Delete
+    div.copies 
+      p #[strong Copies in stock:]
+       ul.in-stock 
+          each recordCopy in record_copies
+            li.detail-copies-in-stock
+              img.small-detail-img(src=record.img, alt='Description of the image') 
+              p #[strong Catalog Number:] #{recordCopy.catalogNum}
+              p #[strong Condition:] #{recordCopy.condition}
+              p #[strong Price:] £#{recordCopy.price}
+              a.detail-update(href=recordCopy.url) Info
