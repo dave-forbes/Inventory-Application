@@ -26,11 +26,12 @@ block content
       if recordCopies.length
         ul
           each recordCopy in recordCopies
-            li
-              img(src=recordCopy.record.img, alt='Description of the image')
-              p #{recordCopy.record.title}
-              p #{recordCopy.record.year}
-              p £#{recordCopy.price}
+            a(href=recordCopy.url)
+              li
+                img(src=recordCopy.record.img, alt='Description of the image')
+                p #{recordCopy.record.title}
+                p #{recordCopy.record.year}
+                p £#{recordCopy.price}
       else
         p There are no records.
     
