@@ -1,0 +1,65 @@
+extends layout
+
+block styles  
+  link(rel='stylesheet', href='/stylesheets/views/record_create.css')
+  block styles
+
+block content
+  div.nav
+    div.links
+        a Create Artist
+        a.focus Create Record
+        a Create Record Copy
+        a Create Genre 
+        a Create Format 
+  h1 New Record
+  form(method='POST')
+    div
+      label Title 
+      input(type='text', name="title" required)
+    div
+      label(for='artist') artist:
+      select(name='artist' required)
+        option(value='') --Please select an artist--
+        for artist in artists
+            option(value=artist) #{artist}
+    div
+      label Tracklist 
+      input(type='text', name="tracklist" required)
+    div
+      label(for='format') format:
+      select(name='format' required)
+        option(value='') --Please select an format--
+        for format in formats
+            option(value=format) #{format}
+    div
+      label(for='condition') condition:
+      select(name='condition' required)
+        option(value='') --Please select an condition--
+        option(value="Poor") Poor
+        option(value="Fair") Fair
+        option(value="Good") Good
+        option(value="New") New
+    div
+      label Released 
+      input(type='date', name="released" required)
+    div
+      label Cover Art
+      input(type='file', name='cover-art', accept='image/png, image/jpeg')
+    div
+      div
+        label Rating 
+        input.star(type='checkbox', name='one', value='1')
+        input.star(type='checkbox', name='two', value='2')
+        input.star(type='checkbox', name='three', value='3')
+        input.star(type='checkbox', name='four', value='4')
+        input.star(type='checkbox', name='five', value='5')
+      script(src='/javascripts/rating.js')
+      div
+        label Price
+        input(type='number', name='price', min='0', step="0.01")
+    div.links   
+      button(type='submit') submit 
+      a(href='/catalog') Cancel
+      
+    
