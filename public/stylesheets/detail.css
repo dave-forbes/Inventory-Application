@@ -67,11 +67,14 @@
   padding: 0 2rem;
 }
 
+.copies { 
+  grid-column: 1/3;
+}
+
 .detail-copies-in-stock {
   display: flex;
   align-items: center;
   gap: 1rem;
-  width: 80vw;
 }
 
 .detail-copies-in-stock a {
