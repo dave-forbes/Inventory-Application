@@ -8,10 +8,9 @@ block content
   div.nav
     div.links
         a.focus New Record
-        a New Artist
         a New Record Copy
+        a New Artist
         a New Genre 
-        a New Format 
   form(method='POST')
     h1.form-title New Record
     div.input-group
@@ -22,35 +21,28 @@ block content
       select(name='artist' required)
         option(value='') --Please select an artist--
         for artist in artists
-            option(value=artist) #{artist}
+            option(value=artist.name) #{artist.name}
     div.input-group
       label Tracklist 
       input(type='text', placeholder='--Please list tracks separated by comma--' name="tracklist" required)
     div.input-group
+      label(for='genre') Genre
+      select(name='genre' required)
+        option(value='') --Please select a genre--
+        for genre in genres
+            option(value=genre.name) #{genre.name}
+    div.input-group
       label(for='format') Format
       select(name='format' required)
-        option(value='') --Please select an format--
-        for format in formats
-            option(value=format) #{format}
+        option(value='') --Please select a format--
+        option(value='Album') Album
+        option(value='Single') Single
     div.input-group
-      label Released 
-      input(type='date', name="released" required)
+      label Year (YYYY) 
+      input(type='number', name='year', max='9999', pattern='\d{4}', placeholder='--Please enter the year released (YYYY)--', required)
     div.input-group
       label Cover Art
       input(type='file', name='cover-art', accept='image/png, image/jpeg')
-    div.small-inputs
-      div.input-group
-        label Rating
-        div.stars 
-          input.star(type='checkbox', name='one', value='1')
-          input.star(type='checkbox', name='two', value='2')
-          input.star(type='checkbox', name='three', value='3')
-          input.star(type='checkbox', name='four', value='4')
-          input.star(type='checkbox', name='five', value='5')
-      script(src='/javascripts/rating.js')
-      div.input-group
-        label Price
-        input(type='number', name='price', min='0', step="0.01")
     button.submit-button(type='submit') Submit 
       
     //- div.input-group
@@ -61,3 +53,16 @@ block content
     //-       option(value="Fair") Fair
     //-       option(value="Good") Good
     //-       option(value="New") New
+    //- div.small-inputs
+    //-   div.input-group
+    //-     label Rating
+    //-     div.stars 
+    //-       input.star(type='checkbox', name='one', value='1')
+    //-       input.star(type='checkbox', name='two', value='2')
+    //-       input.star(type='checkbox', name='three', value='3')
+    //-       input.star(type='checkbox', name='four', value='4')
+    //-       input.star(type='checkbox', name='five', value='5')
+    //-   script(src='/javascripts/rating.js')
+    //-   div.input-group
+    //-     label Price
+    //-     input(type='number', name='price', min='0', step="0.01")
