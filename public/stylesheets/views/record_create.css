@@ -5,6 +5,11 @@
   height: 100px;
 }
 
+.form-title {
+  color: black;
+  text-align: center;
+}
+
 .links {
   display: flex;
   gap: 1rem;
@@ -12,6 +17,38 @@
 
 .focus {
   background-color: black;
+}
+
+.input-group {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.input-group input, .input-group select {
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  padding: 0.5rem;
+}
+
+.input-group input::placeholder {
+  color: black;
+}
+
+.input-group, .small-inputs {
+  width: 500px;
+}
+
+form {
+  display: grid;
+  row-gap: 1rem;
+  justify-content: center;
+  justify-items: center;
+}
+
+.small-inputs {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 a, button {
@@ -29,6 +66,25 @@ a, button {
 
 button {
   border: none;
+}
+
+.submit-button {
+  background-color: aquamarine;
+  color: black;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 800;
+  font-family: 'Jura', sans-serif;
+}
+
+.submit-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.stars {
+  display: flex;
+  gap: 0.5rem;
 }
 
 .star {
