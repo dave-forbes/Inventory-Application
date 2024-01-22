@@ -1,0 +1,46 @@
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.links {
+  display: flex;
+  gap: 1rem;
+}
+
+.focus {
+  background-color: black;
+}
+
+a, button {
+  border-radius: 5px;
+  background: #00e1ff;
+  width: 165px;
+  height: 53px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+}
+
+button {
+  border: none;
+}
+
+.star {
+  visibility:hidden;
+  cursor:pointer;
+}
+.star:before {
+ content: "\2606";
+ visibility:visible;
+}
+.star:checked:before {
+ content: "\2605";
+ color: rgb(255, 225, 0);
+}
+
