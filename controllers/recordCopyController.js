@@ -1,42 +1,42 @@
-const BookInstance = require("../models/recordCopy");
+const RecordCopy = require("../models/recordCopy");
 const asyncHandler = require("express-async-handler");
 
-// Display list of all BookInstances.
-exports.bookinstance_list = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: BookInstance list");
+// Display list of all RecordCopies.
+exports.recordcopy_list = asyncHandler(async (req, res, next) => {
+  res.send("NOT IMPLEMENTED: RecordCopy list");
 });
 
-// Display detail page for a specific BookInstance.
-exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
-  res.send(`NOT IMPLEMENTED: BookInstance detail: ${req.params.id}`);
+// Display detail page for a specific RecordCopy.
+exports.recordcopy_detail = asyncHandler(async (req, res, next) => {
+  res.send(`NOT IMPLEMENTED: RecordCopy detail: ${req.params.id}`);
 });
 
-// Display BookInstance create form on GET.
-exports.bookinstance_create_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: BookInstance create GET");
+// Display RecordCopy create form on GET.
+exports.recordcopy_create_get = asyncHandler(async (req, res, next) => {
+  res.send("NOT IMPLEMENTED: RecordCopy create GET");
 });
 
-// Handle BookInstance create on POST.
-exports.bookinstance_create_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: BookInstance create POST");
+// Handle RecordCopy create on POST.
+exports.recordcopy_create_post = asyncHandler(async (req, res, next) => {
+  res.send("NOT IMPLEMENTED: RecordCopy create POST");
 });
 
-// Display BookInstance delete form on GET.
-exports.bookinstance_delete_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: BookInstance delete GET");
+// Display RecordCopy delete form on GET.
+exports.recordcopy_delete_get = asyncHandler(async (req, res, next) => {
+  res.send("NOT IMPLEMENTED: RecordCopy delete GET");
 });
 
-// Handle BookInstance delete on POST.
-exports.bookinstance_delete_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: BookInstance delete POST");
+// Handle RecordCopy delete on POST.
+exports.recordcopy_delete_post = asyncHandler(async (req, res, next) => {
+  res.send("NOT IMPLEMENTED: RecordCopy delete POST");
 });
 
-// Display BookInstance update form on GET.
-exports.bookinstance_update_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: BookInstance update GET");
+// Display RecordCopy update form on GET.
+exports.recordcopy_update_get = asyncHandler(async (req, res, next) => {
+  res.send("NOT IMPLEMENTED: RecordCopy update GET");
 });
 
 // Handle bookinstance update on POST.
 exports.bookinstance_update_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: BookInstance update POST");
+  res.send("NOT IMPLEMENTED: RecordCopy update POST");
 });
