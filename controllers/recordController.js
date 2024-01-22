@@ -12,6 +12,7 @@ exports.index = asyncHandler(async (req, res, next) => {
   const allYears = await Record.distinct("year");
 
   res.render("index", {
+    title: "All records in stock",
     recordCopies: allRecordCopies,
     years: allYears,
     genres: allGenres,
