@@ -24,15 +24,20 @@
   gap: 0.3rem;
 }
 
-.input-group input, .input-group select {
+.input-group input, .input-group select, .input-group textarea {
   font-size: 1rem;
   border-radius: 5px;
   border: none;
   padding: 0.5rem;
 }
 
-.input-group input::placeholder {
+textarea {
+  resize: none;
+}
+
+.input-group input::placeholder, .input-group textarea::placeholder, .input-group select::placeholder {
   color: black;
+  font-family: sans-serif;
 }
 
 .input-group, .small-inputs {
