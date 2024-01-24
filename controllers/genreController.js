@@ -6,6 +6,7 @@ const Record = require("../models/record");
 const Format = require("../models/format");
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
+const { body, validationResult } = require("express-validator");
 
 // // Display list of all Genre.
 // exports.genre_list = asyncHandler(async (req, res, next) => {
@@ -30,6 +31,7 @@ exports.genre_detail = asyncHandler(async (req, res, next) => {
   res.render("index", {
     title: `All ${genre.name} records in stock`,
     recordCopies: filteredRecords,
+    filterType: "Genre",
     years: allYears,
     genres: allGenres,
   });
@@ -40,10 +42,41 @@ exports.genre_create_get = asyncHandler(async (req, res, next) => {
   res.render("genre_create");
 });
 
-// // Handle Genre create on POST.
-// exports.genre_create_post = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: Genre create POST");
-// });
+// Handle Genre create on POST.
+exports.genre_create_post = [
+  body("name", "Genre name must contain at least 3 characters")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const genre = new Genre({ name: req.body.name });
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render the form again with sanitized values/error messages.
+      res.render("genre_create", {
+        genre: genre,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Data from form is valid.
+      // Check if Genre with same name already exists.
+      const genreExists = await Genre.findOne({ name: req.body.name })
+        .collation({ locale: "en", strength: 2 })
+        .exec();
+      if (genreExists) {
+        // Genre exists, redirect to its detail page.
+        res.redirect(genreExists.url);
+      } else {
+        await genre.save();
+        // New genre saved. Redirect to genre detail page.
+        res.redirect(genre.url);
+      }
+    }
+  }),
+];
 
 // // Display Genre delete form on GET.
 // exports.genre_delete_get = asyncHandler(async (req, res, next) => {
