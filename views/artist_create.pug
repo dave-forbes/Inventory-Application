@@ -7,13 +7,13 @@ block styles
 block content
   div.nav
     div.links
-        a(href='/catalog/record/create') New Record
-        a(href='/catalog/recordcopy/create') New Record Copy
-        a.focus New Artist
-        a(href='/catalog/genre/create') New Genre 
+        a.btn.light-blue(href='/catalog/record/create') New Record
+        a.btn.light-blue(href='/catalog/recordcopy/create') New Record Copy
+        a.focus.btn.light-blue New Artist
+        a.btn.light-blue(href='/catalog/genre/create') New Genre 
   form(method='POST')
     h1.form-title New Artist
     div.input-group
       label Artist Name 
       input(type='text', name='artist', maxlength='12', placeholder='--Please enter the artist\'s name--', required)
-    button.submit-button(type='submit') Submit 
+    button.btn.light-green(type='submit') Submit 

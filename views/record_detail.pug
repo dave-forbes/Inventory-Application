@@ -20,8 +20,8 @@ block content
       p #[strong Format:] #{record.format.name}
       p #[strong Year Released:] #{record.year}
     div.detail-links
-      a.detail-update Update 
-      a.detail-delete Delete
+      a.btn.light-green Update 
+      a.btn.light-red Delete
     div.copies 
       p #[strong Copies in stock:]
        ul.in-stock 
@@ -31,4 +31,4 @@ block content
               p #[strong Catalog Number:] #{recordCopy.catalogNum}
               p #[strong Condition:] #{recordCopy.condition}
               p #[strong Price:] £#{recordCopy.price}
-              a.detail-update(href=recordCopy.url) Info
+              a.btn.light-green(href=recordCopy.url) Info

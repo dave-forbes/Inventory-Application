@@ -7,10 +7,10 @@ block styles
 block content
   div.nav
     div.links
-        a(href='/catalog/record/create') New Record
-        a.focus New Record Copy
-        a(href='/catalog/artist/create') New Artist
-        a(href='/catalog/genre/create') New Genre 
+        a.btn.light-blue(href='/catalog/record/create') New Record
+        a.btn.focus.light-blue New Record Copy
+        a.btn.light-blue(href='/catalog/artist/create') New Artist
+        a.btn.light-blue(href='/catalog/genre/create') New Genre 
   form(method='POST')
     h1.form-title New Record Copy
     div.input-group
@@ -33,4 +33,4 @@ block content
     div.input-group
         label Price (£)
         input(type='number', name='price', min='0', step="0.01")
-    button.submit-button(type='submit') Submit 
+    button.btn.light-green(type='submit') Submit 

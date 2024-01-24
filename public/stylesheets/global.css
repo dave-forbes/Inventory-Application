@@ -22,3 +22,31 @@ img {
   max-width: 1065px;
   margin: 0 auto;
 }
+
+.btn {
+  color: black;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 800;
+  font-family: 'Jura', sans-serif;
+  border-radius: 5px;
+  width: 165px;
+  height: 53px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+}
+
+.light-blue {
+  background: #00e1ff;
+}
+
+.light-green {
+  background-color: aquamarine;
+}
+
+.light-red {
+  background-color: rgb(255, 140, 127);
+}

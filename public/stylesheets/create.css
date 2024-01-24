@@ -17,6 +17,7 @@
 
 .focus {
   background-color: black;
+  color: white;
 }
 
 .input-group {
@@ -55,53 +56,3 @@ form {
   display: flex;
   justify-content: space-evenly;
 }
-
-a, button {
-  border-radius: 5px;
-  background: #00e1ff;
-  width: 165px;
-  height: 53px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  cursor: pointer;
-}
-
-button {
-  border: none;
-}
-
-.submit-button {
-  background-color: aquamarine;
-  color: black;
-  font-size: 1rem;
-  text-decoration: none;
-  font-weight: 800;
-  font-family: 'Jura', sans-serif;
-}
-
-.submit-button:hover {
-  background-color: black;
-  color: white;
-}
-
-.stars {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.star {
-  visibility:hidden;
-  cursor:pointer;
-}
-.star:before {
- content: "\2606";
- visibility:visible;
-}
-.star:checked:before {
- content: "\2605";
- color: rgb(255, 225, 0);
-}
-
