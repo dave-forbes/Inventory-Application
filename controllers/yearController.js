@@ -24,6 +24,7 @@ exports.year_list = asyncHandler(async (req, res, next) => {
   res.render("index", {
     title: `All ${year}s records in stock`,
     recordCopies: filteredRecords,
+    filterType: "decade",
     years: allYears,
     genres: allGenres,
   });
