@@ -37,5 +37,7 @@ block content
                 p #{recordCopy.record.year}
                 p £#{recordCopy.price}
       else
-        p There are no records.
+        p There are no records in this #{filterType}.
+        br
+        a.delete(href='/') Delete?
     

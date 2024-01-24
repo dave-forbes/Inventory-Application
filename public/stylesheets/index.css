@@ -50,3 +50,20 @@
   outline: #00ff04 2px solid;
   border-radius: 5px;
 }
+
+.delete {
+  color: black;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 800;
+  font-family: 'Jura', sans-serif;
+  border-radius: 5px;
+  width: 165px;
+  height: 53px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: rgb(255, 140, 127);
+}
