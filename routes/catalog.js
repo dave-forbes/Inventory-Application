@@ -57,8 +57,8 @@ router.get("/artist/create", artist_controller.artist_create_get);
 // // POST request to update artist.
 // router.post("/artist/:id/update", artist_controller.artist_update_post);
 
-// // GET request for one artist.
-// router.get("/artist/:id", artist_controller.artist_detail);
+// GET request for one artist.
+router.get("/artist/:id", artist_controller.artist_detail);
 
 // // GET request for list of all artists.
 // router.get("/artists", artist_controller.artist_list);

@@ -1,0 +1,19 @@
+extends layout 
+
+block styles  
+  link(rel='stylesheet', href='/stylesheets/detail.css')
+
+block content
+  div.artist-detail-container
+    h1 #{artist.name}
+
+    div.copies 
+        p #[strong Records by this artist in stock:]
+        ul.in-stock 
+            each recordCopy in record_copies
+              li.detail-copies-in-stock
+                img.small-detail-img(src=recordCopy.record.img, alt='Description of the image') 
+                p #[strong Catalog Number:] #{recordCopy.catalogNum}
+                p #[strong Condition:] #{recordCopy.condition}
+                p #[strong Price:] £#{recordCopy.price}
+                a.detail-update(href=recordCopy.url) Info

@@ -1,15 +1,34 @@
+const RecordCopy = require("../models/recordCopy");
 const Artist = require("../models/artist");
+const Genre = require("../models/genre");
 const asyncHandler = require("express-async-handler");
+const Record = require("../models/record");
+const Format = require("../models/format");
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Types;
 
 // Display list of all artists.
 exports.artist_list = asyncHandler(async (req, res, next) => {
   res.send("NOT IMPLEMENTED: artist list");
 });
 
-// // Display detail page for a specific artist.
-// exports.artist_detail = asyncHandler(async (req, res, next) => {
-//   res.send(`NOT IMPLEMENTED: artist detail: ${req.params.id}`);
-// });
+// Display detail page for a specific artist.
+exports.artist_detail = asyncHandler(async (req, res, next) => {
+  const allRecordCopies = await RecordCopy.find().populate("record").exec();
+  const artist = await Artist.findById(req.params.id).exec();
+
+  const artistToFilter = new ObjectId(req.params.id);
+
+  // Filter records by artist
+  const filteredRecords = allRecordCopies.filter((recordCopy) =>
+    recordCopy.record.artist.equals(artistToFilter)
+  );
+
+  res.render("artist_detail", {
+    artist: artist,
+    record_copies: filteredRecords,
+  });
+});
 
 // Display artist create form on GET.
 exports.artist_create_get = asyncHandler(async (req, res, next) => {
