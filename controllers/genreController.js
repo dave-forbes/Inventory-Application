@@ -31,7 +31,8 @@ exports.genre_detail = asyncHandler(async (req, res, next) => {
   res.render("index", {
     title: `All ${genre.name} records in stock`,
     recordCopies: filteredRecords,
-    filterType: "Genre",
+    filterType: "genre",
+    id: req.params.id,
     years: allYears,
     genres: allGenres,
   });
@@ -78,15 +79,17 @@ exports.genre_create_post = [
   }),
 ];
 
-// // Display Genre delete form on GET.
-// exports.genre_delete_get = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: Genre delete GET");
-// });
+// Display Genre delete form on GET.
+exports.genre_delete_get = asyncHandler(async (req, res, next) => {
+  const genre = await Genre.findById(req.params.id);
+  res.render("genre_delete", { genre: genre });
+});
 
-// // Handle Genre delete on POST.
-// exports.genre_delete_post = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: Genre delete POST");
-// });
+// Handle Genre delete on POST.
+exports.genre_delete_post = asyncHandler(async (req, res, next) => {
+  await Genre.findByIdAndDelete(req.body.genreid);
+  res.redirect("/");
+});
 
 // // Display Genre update form on GET.
 // exports.genre_update_get = asyncHandler(async (req, res, next) => {

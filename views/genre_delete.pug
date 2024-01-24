@@ -1,0 +1,12 @@
+extends layout 
+
+block styles  
+  link(rel='stylesheet', href='/stylesheets/delete.css')
+
+block content 
+  div.centered 
+    p Are you sure you want to delete the #{genre.name} genre?
+  
+    form(method="post")
+      input(type='hidden', name='genreid', value=genre._id ) 
+      button.btn.light-red(type='submit') Delete?

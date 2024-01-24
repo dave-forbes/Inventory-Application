@@ -1,0 +1,8 @@
+.centered {
+  display: flex;
+  flex-direction: column;
+  gap:2rem;
+  margin-top: 3rem;
+  justify-content: center;
+  align-items: center;
+}
