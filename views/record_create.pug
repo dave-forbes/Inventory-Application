@@ -23,7 +23,7 @@ block content
             option(value=artist.name) #{artist.name}
     div.input-group
       label Tracklist 
-      input(type='text', placeholder='--Please list tracks separated by comma--' name="tracklist" required)
+      textarea(placeholder='--Please list tracks separated by comma--' name="tracklist" required, cols="30", rows="5")
     div.input-group
       label(for='genre') Genre
       select(name='genre' required)
