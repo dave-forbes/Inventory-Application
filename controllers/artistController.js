@@ -6,6 +6,7 @@ const Record = require("../models/record");
 const Format = require("../models/format");
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
+const { body, validationResult } = require("express-validator");
 
 // Display list of all artists.
 exports.artist_list = asyncHandler(async (req, res, next) => {
@@ -35,10 +36,41 @@ exports.artist_create_get = asyncHandler(async (req, res, next) => {
   res.render("artist_create");
 });
 
-// // Handle artist create on POST.
-// exports.artist_create_post = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: artist create POST");
-// });
+// Handle artist create on POST.
+exports.artist_create_post = [
+  body("name", "Artist name must contain at least 3 characters")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const artist = new Artist({ name: req.body.name });
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render the form again with sanitized values/error messages.
+      res.render("artist_create", {
+        artist: artist,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Data from form is valid.
+      // Check if artist with same name already exists.
+      const artistExists = await Artist.findOne({ name: req.body.name })
+        .collation({ locale: "en", strength: 2 })
+        .exec();
+      if (artistExists) {
+        // artist exists, redirect to its detail page.
+        res.redirect(artistExists.url);
+      } else {
+        await artist.save();
+        // New artist saved. Redirect to artist detail page.
+        res.redirect(artist.url);
+      }
+    }
+  }),
+];
 
 // // Display artist delete form on GET.
 // exports.artist_delete_get = asyncHandler(async (req, res, next) => {

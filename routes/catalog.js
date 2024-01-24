@@ -42,8 +42,8 @@ router.get("/record/:id", record_controller.record_detail);
 // GET request for creating Artist. NOTE This must come before route for id (i.e. display artist).
 router.get("/artist/create", artist_controller.artist_create_get);
 
-// // POST request for creating artist.
-// router.post("/artist/create", artist_controller.artist_create_post);
+// POST request for creating artist.
+router.post("/artist/create", artist_controller.artist_create_post);
 
 // // GET request to delete artist.
 // router.get("/artist/:id/delete", artist_controller.artist_delete_get);

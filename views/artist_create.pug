@@ -15,5 +15,9 @@ block content
     h1.form-title New Artist
     div.input-group
       label Artist Name 
-      input(type='text', name='artist', maxlength='12', placeholder='--Please enter the artist\'s name--', required)
-    button.btn.light-green(type='submit') Submit 
+      input(type='text', name='name', maxlength='12', placeholder='--Please enter the artist name--', value=(artist===undefined ? '' : artist.name) required)
+    button.btn.light-green(type='submit') Submit
+    if errors
+      div
+        each error in errors
+          p #{error.msg}
