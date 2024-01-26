@@ -94,11 +94,11 @@ router.get("/genre/:id", genre_controller.genre_detail);
 // GET request for creating a record copy. NOTE This must come before route that displays RecordCopy (uses id).
 router.get("/recordcopy/create", record_copy_controller.recordcopy_create_get);
 
-// // POST request for creating recordcopy.
-// router.post(
-//   "/recordcopy/create",
-//   record_copy_controller.recordcopy_create_post
-// );
+// POST request for creating recordcopy.
+router.post(
+  "/recordcopy/create",
+  record_copy_controller.recordcopy_create_post
+);
 
 // // GET request to delete recordcopy.
 // router.get(
