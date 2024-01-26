@@ -33,6 +33,7 @@ exports.artist_list = asyncHandler(async (req, res, next) => {
 // Display detail page for a specific artist.
 exports.artist_detail = asyncHandler(async (req, res, next) => {
   const allRecordCopies = await RecordCopy.find().populate("record").exec();
+  const allRecords = await Record.find({ artist: req.params.id }).exec();
   const artist = await Artist.findById(req.params.id).exec();
 
   const artistToFilter = new ObjectId(req.params.id);
@@ -45,6 +46,7 @@ exports.artist_detail = asyncHandler(async (req, res, next) => {
   res.render("artist_detail", {
     artist: artist,
     record_copies: filteredRecords,
+    records: allRecords,
   });
 });
 

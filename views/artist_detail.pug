@@ -6,6 +6,19 @@ block styles
 block content
   div.artist-detail-container
     h1 #{artist.name}
+    if records.length
+      div.copies 
+          p #[strong Records by this artist:]
+          ul.in-stock 
+              each record in records
+                li.detail-copies-in-stock
+                  img.small-detail-img(src=record.img, alt='Description of the image') 
+                  p #[strong Title:] #{record.title}
+                  a.btn.light-green(href=record.url) Info
+    else 
+      p There are no records for this artist.
+      br
+      a.btn.light-red(href=`/catalog/artist/${artist._id}/delete`) Delete?
     if record_copies.length
       div.copies 
           p #[strong Records by this artist in stock:]
