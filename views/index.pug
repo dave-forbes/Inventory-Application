@@ -21,23 +21,35 @@ block content
         a(href=`/catalog/year/1980`) 1980
         a(href=`/catalog/year/1990`) 1990
         a(href=`/catalog/year/2000`) 2000
+      ul 
+        h3 Artist 
+        - var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+          each letter in alphabet
+            a= letter
       ul
         h3 Format 
         a Single 
         a Album
     div(class='record-grid')
       h1= title
-      if recordCopies.length
-        ul
-          each recordCopy in recordCopies
-            a(href=recordCopy.url)
-              li
-                img(src=recordCopy.record.img, alt='Description of the image')
-                p #{recordCopy.record.title}
-                p #{recordCopy.record.year}
-                p £#{recordCopy.price}
-      else
-        p There are no records in this #{filterType}.
-        br
-        a.btn.light-red(href=`/catalog/${filterType}/${id}/delete`) Delete?
+      case listType 
+        when "artist"
+          p Display a list of artists.
+        default
+          if recordCopies.length
+            ul
+              each recordCopy in recordCopies
+                a(href=recordCopy.url)
+                  li
+                    img(src=recordCopy.record.img, alt='Description of the image')
+                    p #{recordCopy.record.title}
+                    p #{recordCopy.record.year}
+                    p £#{recordCopy.price}
+          else
+            if filterType.length
+              p There are no records in this #{filterType}.
+              br
+              a.btn.light-red(href=`/catalog/${filterType}/${id}/delete`) Delete?
+            else 
+              p There are no records.
     
