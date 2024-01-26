@@ -77,3 +77,8 @@
 .artist-detail-container a {
   justify-self: center;
 }
+
+.delete-form {
+  display: flex;
+    gap: 1rem;
+}
