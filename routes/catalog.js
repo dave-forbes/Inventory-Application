@@ -60,8 +60,8 @@ router.get("/artist/:id/delete", artist_controller.artist_delete_get);
 // GET request for one artist.
 router.get("/artist/:id", artist_controller.artist_detail);
 
-// // GET request for list of all artists.
-// router.get("/artists", artist_controller.artist_list);
+// GET request for list of all artists, filtered by first letter.
+router.get("/artists/:id", artist_controller.artist_list);
 
 // /// GENRE ROUTES ///
 

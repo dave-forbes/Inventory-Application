@@ -10,7 +10,24 @@ const { body, validationResult } = require("express-validator");
 
 // Display list of all artists.
 exports.artist_list = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: artist list");
+  const allArtists = await Artist.find().exec();
+  const allGenres = await Genre.find().sort({ name: 1 }).exec();
+  const allYears = await Record.distinct("year");
+
+  const firstLetter = req.params.id;
+  const filteredArtists = allArtists.filter(
+    (artist) => artist.name[0] === firstLetter
+  );
+
+  console.log(filteredArtists);
+
+  res.render("index", {
+    title: `All artists in ${firstLetter}`,
+    years: allYears,
+    genres: allGenres,
+    artists: filteredArtists,
+    listType: "artist",
+  });
 });
 
 // Display detail page for a specific artist.
