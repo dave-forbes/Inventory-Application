@@ -100,17 +100,17 @@ router.post(
   record_copy_controller.recordcopy_create_post
 );
 
-// // GET request to delete recordcopy.
-// router.get(
-//   "/recordcopy/:id/delete",
-//   record_copy_controller.recordcopy_delete_get
-// );
+// GET request to delete recordcopy.
+router.get(
+  "/recordcopy/:id/delete",
+  record_copy_controller.recordcopy_delete_get
+);
 
-// // POST request to delete recordcopy.
-// router.post(
-//   "/recordcopy/:id/delete",
-//   record_copy_controller.recordcopy_delete_post
-// );
+// POST request to delete recordcopy.
+router.post(
+  "/recordcopy/:id/delete",
+  record_copy_controller.recordcopy_delete_post
+);
 
 // // GET request to update recordcopy.
 // router.get(

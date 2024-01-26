@@ -26,6 +26,7 @@ exports.recordcopy_detail = asyncHandler(async (req, res, next) => {
   res.render("recordcopy_detail", {
     artist: artist,
     recordCopy: recordCopy,
+    toDelete: false,
   });
 });
 
@@ -86,15 +87,25 @@ exports.recordcopy_create_post = [
   }),
 ];
 
-// // Display RecordCopy delete form on GET.
-// exports.recordcopy_delete_get = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: RecordCopy delete GET");
-// });
+// Display RecordCopy delete form on GET.
+exports.recordcopy_delete_get = asyncHandler(async (req, res, next) => {
+  const recordCopy = await RecordCopy.findById(req.params.id)
+    .populate("record")
+    .exec();
+  const artist = await Artist.findById(recordCopy.record.artist);
 
-// // Handle RecordCopy delete on POST.
-// exports.recordcopy_delete_post = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: RecordCopy delete POST");
-// });
+  res.render("recordcopy_detail", {
+    artist: artist,
+    recordCopy: recordCopy,
+    toDelete: true,
+  });
+});
+
+// Handle RecordCopy delete on POST.
+exports.recordcopy_delete_post = asyncHandler(async (req, res, next) => {
+  await RecordCopy.findByIdAndDelete(req.body.recordcopyid);
+  res.redirect("/");
+});
 
 // // Display RecordCopy update form on GET.
 // exports.recordcopy_update_get = asyncHandler(async (req, res, next) => {

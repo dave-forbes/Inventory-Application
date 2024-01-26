@@ -14,7 +14,13 @@ block content
       p #[strong Catalog Number:] #{recordCopy.catalogNum}
       p #[strong Condition:] #{recordCopy.condition}
       p #[strong Price:] £#{recordCopy.price}
-    div.detail-links
-      a.btn.light-green Update 
-      a.btn.light-red Delete
+    if toDelete
+      p Are you sure you want to delete this copy of #{recordCopy.record.title} by #{artist.name}?
+      form(method="post")
+        input(type='hidden', name='recordcopyid', value=recordCopy._id ) 
+        button.btn.light-red(type='submit') Delete?
+    else  
+      div.detail-links
+        a.btn.light-green Update 
+        a.btn.light-red(href=`/catalog/recordcopy/${recordCopy._id}/delete`) Delete
       
