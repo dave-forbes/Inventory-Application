@@ -16,8 +16,8 @@ router.get("/", record_controller.index);
 // GET request for creating a Book. NOTE This must come before routes that display Book (uses id).
 router.get("/record/create", record_controller.record_create_get);
 
-// // POST request for creating Book.
-// router.post("/record/create", record_controller.record_create_post);
+// POST request for creating Book.
+router.post("/record/create", record_controller.record_create_post);
 
 // // GET request to delete Book.
 // router.get("/record/:id/delete", record_controller.record_delete_get);
