@@ -27,11 +27,11 @@ block content
                     p #[strong Price:] £#{recordCopy.price}
                     a.btn.light-green(href=recordCopy.url) Info
       else 
-        p There are no records in stock for this artist.
+        p There are no records in stock for this artist, create new record copy?
         br
-        a.btn.light-red(href=`/catalog/artist/${artist._id}/delete`) Delete?
+        a.btn.light-green(href=`/catalog/recordcopy/create`) Create
     else 
-      p There are no records for this artist.
+      p There are no records for this artist, delete #{artist.name}?
       br
-      a.btn.light-red(href=`/catalog/artist/${artist._id}/delete`) Delete?
+      a.btn.light-red(href=`/catalog/artist/${artist._id}/delete`) Delete
     
