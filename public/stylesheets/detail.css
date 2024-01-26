@@ -47,6 +47,7 @@
   grid-column: 1/3;
   display: grid;
   gap: 1rem;
+  justify-items: center;
 }
 
 .detail-copies-in-stock {
