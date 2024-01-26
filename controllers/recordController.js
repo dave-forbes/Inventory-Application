@@ -5,27 +5,8 @@ const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
 const Format = require("../models/format");
 const { body, validationResult } = require("express-validator");
-const multer = require("multer");
 const convertToArray = require("../convertToArray");
-const path = require("path");
-
-// Set up multer storage and specify the destination for uploaded files
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(
-      null,
-      path.join(
-        "/Users/davidforbes/repos/Inventory-Application/",
-        "public/images"
-      )
-    );
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({ storage: storage });
+const upload = require("../multerSetup");
 
 // Display list of all records.
 exports.index = asyncHandler(async (req, res, next) => {
@@ -148,15 +129,15 @@ exports.record_create_post = [
   }),
 ];
 
-// // Display book delete form on GET.
-// exports.book_delete_get = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: Book delete GET");
-// });
+// Display record delete form on GET.
+exports.record_delete_get = asyncHandler(async (req, res, next) => {
+  res.send("NOT IMPLEMENTED: Book delete GET");
+});
 
-// // Handle book delete on POST.
-// exports.book_delete_post = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: Book delete POST");
-// });
+// Handle record delete on POST.
+exports.record_delete_post = asyncHandler(async (req, res, next) => {
+  res.send("NOT IMPLEMENTED: Book delete POST");
+});
 
 // // Display book update form on GET.
 // exports.book_update_get = asyncHandler(async (req, res, next) => {
