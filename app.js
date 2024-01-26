@@ -6,7 +6,6 @@ const logger = require("morgan");
 
 const indexRouter = require("./routes/index");
 const catalogRouter = require("./routes/catalog");
-const multer = require("multer");
 
 const app = express();
 
@@ -14,22 +13,16 @@ const app = express();
 const mongoose = require("mongoose");
 const mongoDBDevString = require("./mongoDB");
 mongoose.set("strictQuery", false);
-main().catch((err) => console.log(err));
+main().catch((err) => console.error("MongoDB connection error:", err));
+
 async function main() {
-  await mongoose.connect(mongoDBDevString);
+  try {
+    await mongoose.connect(mongoDBDevString);
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+  }
 }
-
-// Set up multer storage and specify the destination for uploaded files
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "public/images"));
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({ storage: storage });
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
