@@ -28,13 +28,17 @@ block content
       div.detail-links
       a.btn.light-green Update 
       a.btn.light-red(href=`/catalog/record/${record._id}/delete`) Delete
-    div.copies 
-      p #[strong Copies in stock:]
-       ul.in-stock 
-          each recordCopy in record_copies
-            li.detail-copies-in-stock
-              img.small-detail-img(src=record.img, alt='Description of the image') 
-              p #[strong Catalog Number:] #{recordCopy.catalogNum}
-              p #[strong Condition:] #{recordCopy.condition}
-              p #[strong Price:] £#{recordCopy.price}
-              a.btn.light-green(href=recordCopy.url) Info
+    div.copies
+      if record_copies.length 
+        p #[strong Copies in stock:]
+        ul.in-stock 
+            each recordCopy in record_copies
+              li.detail-copies-in-stock
+                img.small-detail-img(src=record.img, alt='Description of the image') 
+                p #[strong Catalog Number:] #{recordCopy.catalogNum}
+                p #[strong Condition:] #{recordCopy.condition}
+                p #[strong Price:] £#{recordCopy.price}
+                a.btn.light-green(href=recordCopy.url) Info
+      else 
+        p No copies in stock, add new copy?
+        a.btn.light-green(href=`/catalog/recordcopy/create`) New
