@@ -72,15 +72,16 @@ exports.artist_create_post = [
   }),
 ];
 
-// // Display artist delete form on GET.
-// exports.artist_delete_get = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: artist delete GET");
-// });
+// Display artist delete form on GET.
+exports.artist_delete_get = asyncHandler(async (req, res, next) => {
+  res.redirect("artist_delete");
+});
 
-// // Handle artist delete on POST.
-// exports.artist_delete_post = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: artist delete POST");
-// });
+// Handle artist delete on POST.
+exports.artist_delete_post = asyncHandler(async (req, res, next) => {
+  await Artist.findByIdAndDelete(req.body.artistid);
+  res.redirect("/");
+});
 
 // // Display artist update form on GET.
 // exports.artist_update_get = asyncHandler(async (req, res, next) => {
