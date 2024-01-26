@@ -25,16 +25,21 @@ block content
         h3 Artist 
         - var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
           each letter in alphabet
-            a= letter
+            a(href=`/catalog/artists/${letter}`)= letter
       ul
         h3 Format 
         a Single 
         a Album
-    div(class='record-grid')
+    div(class='result-grid')
       h1= title
       case listType 
         when "artist"
-          p Display a list of artists.
+          if artists.length 
+            ul.artist-list
+              each artist in artists 
+                a(href=artist.url) #{artist.name}
+          else 
+            p No artists.
         default
           if recordCopies.length
             ul
