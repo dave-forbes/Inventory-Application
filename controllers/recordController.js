@@ -44,6 +44,7 @@ exports.record_detail = asyncHandler(async (req, res, next) => {
     title: record.title,
     record: record,
     record_copies: recordCopies,
+    toDelete: false,
   });
 });
 
@@ -131,12 +132,34 @@ exports.record_create_post = [
 
 // Display record delete form on GET.
 exports.record_delete_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Book delete GET");
+  const [record, recordCopies] = await Promise.all([
+    Record.findById(req.params.id)
+      .populate("artist")
+      .populate("genre")
+      .populate("format")
+      .exec(),
+    RecordCopy.find({ record: req.params.id }).exec(),
+  ]);
+
+  if (record === null) {
+    // No results.
+    const err = new Error("Record not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("record_detail", {
+    title: record.title,
+    record: record,
+    record_copies: recordCopies,
+    toDelete: true,
+  });
 });
 
 // Handle record delete on POST.
 exports.record_delete_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Book delete POST");
+  await Record.findByIdAndDelete(req.body.recordid);
+  res.redirect("/");
 });
 
 // // Display book update form on GET.

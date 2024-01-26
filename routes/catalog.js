@@ -19,11 +19,11 @@ router.get("/record/create", record_controller.record_create_get);
 // POST request for creating record.
 router.post("/record/create", record_controller.record_create_post);
 
-// // GET request to delete record.
-// router.get("/record/:id/delete", record_controller.record_delete_get);
+// GET request to delete record.
+router.get("/record/:id/delete", record_controller.record_delete_get);
 
-// // POST request to delete record.
-// router.post("/record/:id/delete", record_controller.record_delete_post);
+// POST request to delete record.
+router.post("/record/:id/delete", record_controller.record_delete_post);
 
 // // GET request to update record.
 // router.get("/record/:id/update", record_controller.record_update_get);

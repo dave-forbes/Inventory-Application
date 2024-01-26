@@ -19,9 +19,15 @@ block content
       p #[strong Genre:] #{record.genre.name}
       p #[strong Format:] #{record.format.name}
       p #[strong Year Released:] #{record.year}
-    div.detail-links
+    if toDelete
+      p Are you sure you want to delete #{record.title} by #{record.artist.name}?
+      form(method="post")
+        input(type='hidden', name='recordid', value=record._id ) 
+        button.btn.light-red(type='submit') Delete?
+    else  
+      div.detail-links
       a.btn.light-green Update 
-      a.btn.light-red Delete
+      a.btn.light-red(href=`/catalog/record/${record._id}/delete`) Delete
     div.copies 
       p #[strong Copies in stock:]
        ul.in-stock 
