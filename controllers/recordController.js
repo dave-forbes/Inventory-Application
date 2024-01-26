@@ -7,6 +7,8 @@ const Format = require("../models/format");
 const { body, validationResult } = require("express-validator");
 const convertToArray = require("../convertToArray");
 const upload = require("../multerSetup");
+const path = require("path");
+const fs = require("fs");
 
 // Display list of all records.
 exports.index = asyncHandler(async (req, res, next) => {
@@ -158,8 +160,35 @@ exports.record_delete_get = asyncHandler(async (req, res, next) => {
 
 // Handle record delete on POST.
 exports.record_delete_post = asyncHandler(async (req, res, next) => {
-  await Record.findByIdAndDelete(req.body.recordid);
-  res.redirect("/");
+  try {
+    const recordId = req.params.id;
+
+    // Fetch the record from the database to get the associated image filename
+    const record = await Record.findById(recordId);
+
+    if (!record) {
+      return res.status(404).json({ error: "Record not found" });
+    }
+
+    const parentDir = path.resolve(__dirname, "..");
+
+    // Delete the associated image file
+    const imagePath = path.join(parentDir, "public", record.img);
+
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+      console.log("Image deleted successfully");
+    } else {
+      console.log("Image not found");
+    }
+
+    // Delete the record from the database
+    await Record.findByIdAndDelete(recordId);
+    res.redirect("/");
+  } catch (error) {
+    console.error(error);
+    res.render("error", { error: error });
+  }
 });
 
 // // Display book update form on GET.
