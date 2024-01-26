@@ -8,24 +8,24 @@ const genre_controller = require("../controllers/genreController");
 const record_copy_controller = require("../controllers/recordCopyController");
 const year_controller = require("../controllers/yearController");
 
-/// BOOK ROUTES ///
+/// record ROUTES ///
 
 // GET catalog home page.
 router.get("/", record_controller.index);
 
-// GET request for creating a Book. NOTE This must come before routes that display Book (uses id).
+// GET request for creating a record. NOTE This must come before routes that display record (uses id).
 router.get("/record/create", record_controller.record_create_get);
 
-// POST request for creating Book.
+// POST request for creating record.
 router.post("/record/create", record_controller.record_create_post);
 
-// // GET request to delete Book.
+// // GET request to delete record.
 // router.get("/record/:id/delete", record_controller.record_delete_get);
 
-// // POST request to delete Book.
+// // POST request to delete record.
 // router.post("/record/:id/delete", record_controller.record_delete_post);
 
-// // GET request to update Book.
+// // GET request to update record.
 // router.get("/record/:id/update", record_controller.record_update_get);
 
 // // POST request to update record.
@@ -89,7 +89,7 @@ router.get("/genre/:id", genre_controller.genre_detail);
 // // GET request for list of all Genre.
 // router.get("/genres", genre_controller.genre_list);
 
-// /// BOOKINSTANCE ROUTES ///
+// /// recordINSTANCE ROUTES ///
 
 // GET request for creating a record copy. NOTE This must come before route that displays RecordCopy (uses id).
 router.get("/recordcopy/create", record_copy_controller.recordcopy_create_get);
