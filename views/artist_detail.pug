@@ -15,22 +15,23 @@ block content
                   img.small-detail-img(src=record.img, alt='Description of the image') 
                   p #[strong Title:] #{record.title}
                   a.btn.light-green(href=record.url) Info
+      if record_copies.length
+        div.copies 
+            p #[strong Records copies stock:]
+            ul.in-stock 
+                each recordCopy in record_copies
+                  li.detail-copies-in-stock
+                    img.small-detail-img(src=recordCopy.record.img, alt='Description of the image') 
+                    p #[strong Catalog Number:] #{recordCopy.catalogNum}
+                    p #[strong Condition:] #{recordCopy.condition}
+                    p #[strong Price:] £#{recordCopy.price}
+                    a.btn.light-green(href=recordCopy.url) Info
+      else 
+        p There are no records in stock for this artist.
+        br
+        a.btn.light-red(href=`/catalog/artist/${artist._id}/delete`) Delete?
     else 
       p There are no records for this artist.
       br
       a.btn.light-red(href=`/catalog/artist/${artist._id}/delete`) Delete?
-    if record_copies.length
-      div.copies 
-          p #[strong Records by this artist in stock:]
-          ul.in-stock 
-              each recordCopy in record_copies
-                li.detail-copies-in-stock
-                  img.small-detail-img(src=recordCopy.record.img, alt='Description of the image') 
-                  p #[strong Catalog Number:] #{recordCopy.catalogNum}
-                  p #[strong Condition:] #{recordCopy.condition}
-                  p #[strong Price:] £#{recordCopy.price}
-                  a.btn.light-green(href=recordCopy.url) Info
-    else 
-      p There are no records in stock for this artist.
-      br
-      a.btn.light-red(href=`/catalog/artist/${artist._id}/delete`) Delete?
+    
