@@ -91,7 +91,11 @@ exports.artist_create_post = [
 
 // Display artist delete form on GET.
 exports.artist_delete_get = asyncHandler(async (req, res, next) => {
-  res.redirect("artist_delete");
+  const artist = await Artist.findById(req.params.id).exec();
+
+  res.render("artist_delete", {
+    artist: artist,
+  });
 });
 
 // Handle artist delete on POST.
