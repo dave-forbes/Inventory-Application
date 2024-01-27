@@ -12,7 +12,7 @@ block content
         a.focus.btn.light-blue New Artist
         a.btn.light-blue(href='/catalog/genre/create') New Genre 
   form(method='POST')
-    h1.form-title New Artist
+    h1.form-title #{title}
     div.input-group
       label Artist Name 
       input(type='text', name='name', maxlength='30', placeholder='--Please enter the artist name--', value=(artist===undefined ? '' : artist.name) required)

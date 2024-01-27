@@ -51,11 +51,11 @@ router.get("/artist/:id/delete", artist_controller.artist_delete_get);
 // POST request to delete artist.
 router.post("/artist/:id/delete", artist_controller.artist_delete_post);
 
-// // GET request to update artist.
-// router.get("/artist/:id/update", artist_controller.artist_update_get);
+// GET request to update artist.
+router.get("/artist/:id/update", artist_controller.artist_update_get);
 
-// // POST request to update artist.
-// router.post("/artist/:id/update", artist_controller.artist_update_post);
+// POST request to update artist.
+router.post("/artist/:id/update", artist_controller.artist_update_post);
 
 // GET request for one artist.
 router.get("/artist/:id", artist_controller.artist_detail);

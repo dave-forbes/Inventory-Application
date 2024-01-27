@@ -5,7 +5,9 @@ block styles
 
 block content
   div.artist-detail-container
-    h1 #{artist.name}
+    div.flex.justify
+      h1 #{artist.name}
+      a.sml-btn.light-green(href=`/catalog/artist/${artist._id}/update`) Update
     if records.length
       div.copies 
           p #[strong Records by this artist:]
@@ -14,7 +16,7 @@ block content
                 li.detail-copies-in-stock
                   img.small-detail-img(src=record.img, alt='Description of the image') 
                   p #[strong Title:] #{record.title}
-                  a.btn.light-green(href=record.url) Info
+                  a.sml-btn.light-green(href=record.url) Info
       if record_copies.length
         div.copies 
             p #[strong Records copies stock:]
@@ -25,7 +27,7 @@ block content
                     p #[strong Catalog Number:] #{recordCopy.catalogNum}
                     p #[strong Condition:] #{recordCopy.condition}
                     p #[strong Price:] £#{recordCopy.price}
-                    a.btn.light-green(href=recordCopy.url) Info
+                    a.sml-btn.light-green(href=recordCopy.url) Info
       else 
         p There are no records in stock for this artist, create new record copy?
         br

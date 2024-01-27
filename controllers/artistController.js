@@ -52,7 +52,7 @@ exports.artist_detail = asyncHandler(async (req, res, next) => {
 
 // Display artist create form on GET.
 exports.artist_create_get = asyncHandler(async (req, res, next) => {
-  res.render("artist_create");
+  res.render("artist_create", { title: "New Artist" });
 });
 
 // Handle artist create on POST.
@@ -106,12 +106,52 @@ exports.artist_delete_post = asyncHandler(async (req, res, next) => {
   res.redirect("/");
 });
 
-// // Display artist update form on GET.
-// exports.artist_update_get = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: artist update GET");
-// });
+// Display artist update form on GET.
+exports.artist_update_get = asyncHandler(async (req, res, next) => {
+  const artist = await Artist.findById(req.params.id);
+  res.render("artist_create", { title: "New Artist", artist: artist });
+});
 
-// // Handle artist update on POST.
-// exports.artist_update_post = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: artist update POST");
-// });
+// Handle artist update on POST.
+exports.artist_update_post = [
+  body("name", "Genre name must contain at least 3 characters")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const artist = await Artist.findById(req.params.id);
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render the form again with sanitized values/error messages.
+      res.render("artist_create", {
+        artist: artist,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Data from form is valid.
+      await Artist.findByIdAndUpdate(req.params.id, {
+        name: req.body.name,
+      });
+
+      const allRecordCopies = await RecordCopy.find().populate("record").exec();
+      const allRecords = await Record.find({ artist: req.params.id }).exec();
+      const artist = await Artist.findById(req.params.id).exec();
+
+      const artistToFilter = new ObjectId(req.params.id);
+
+      // Filter records by artist
+      const filteredRecords = allRecordCopies.filter((recordCopy) =>
+        recordCopy.record.artist.equals(artistToFilter)
+      );
+
+      res.render("artist_detail", {
+        artist: artist,
+        record_copies: filteredRecords,
+        records: allRecords,
+      });
+    }
+  }),
+];
