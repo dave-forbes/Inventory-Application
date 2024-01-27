@@ -39,6 +39,22 @@ img {
   border: none;
 }
 
+.sml-btn {
+  width: 100px;
+  height: 20px;
+  color: black;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 800;
+  font-family: 'Jura', sans-serif;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+}
+
 .light-blue {
   background: #00e1ff;
 }
@@ -49,4 +65,10 @@ img {
 
 .light-red {
   background-color: rgb(255, 140, 127);
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
