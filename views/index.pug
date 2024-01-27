@@ -31,7 +31,10 @@ block content
         a Single 
         a Album
     div(class='result-grid')
-      h1= title
+      div.flex
+        h1= title
+        if filterType === "genre"
+          a.sml-btn.light-green(href=`/catalog/${filterType}/${id}/update`) Update
       case listType 
         when "artist"
           if artists.length 
