@@ -56,11 +56,6 @@
   gap: 1rem;
 }
 
-.detail-copies-in-stock a {
-  width: 100px;
-  height: 20px;
-}
-
 .artist-detail-container {
   margin-top: 3rem;
   display: grid;
@@ -80,5 +75,10 @@
 
 .delete-form {
   display: flex;
-    gap: 1rem;
+  gap: 1rem;
+}
+
+.flex.justify {
+  grid-column: 1/3;
+  justify-self: center;
 }
