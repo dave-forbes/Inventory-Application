@@ -112,17 +112,17 @@ router.post(
   record_copy_controller.recordcopy_delete_post
 );
 
-// // GET request to update recordcopy.
-// router.get(
-//   "/recordcopy/:id/update",
-//   record_copy_controller.recordcopy_update_get
-// );
+// GET request to update recordcopy.
+router.get(
+  "/recordcopy/:id/update",
+  record_copy_controller.recordcopy_update_get
+);
 
-// // POST request to update recordcopy.
-// router.post(
-//   "/recordcopy/:id/update",
-//   record_copy_controller.recordcopy_update_post
-// );
+// POST request to update recordcopy.
+router.post(
+  "/recordcopy/:id/update",
+  record_copy_controller.recordcopy_update_post
+);
 
 // GET request for one recordcopy.
 router.get("/recordcopy/:id", record_copy_controller.recordcopy_detail);

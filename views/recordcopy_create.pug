@@ -8,31 +8,41 @@ block content
   div.nav
     div.links
         a.btn.light-blue(href='/catalog/record/create') New Record
-        a.btn.focus.light-blue New Record Copy
+        a.btn.focus.light-blue #{title}
         a.btn.light-blue(href='/catalog/artist/create') New Artist
         a.btn.light-blue(href='/catalog/genre/create') New Genre 
   form(method='POST')
-    h1.form-title New Record Copy
+    h1.form-title #{title}
     div.input-group
       label(for='record') Record
       select(name='record' required)
         option(value='') --Please select a record--
         for record in record_list
+          if recordCopy
+            if recordCopy.record._id.toString()===record._id.toString()
+              option(value=recordCopy.record._id selected) #{`${artist.name} - ${recordCopy.record.title}`}
+            else
+              option(value=record._id) #{`${record.artist.name} - ${record.title}`}
+          else
             option(value=record._id) #{`${record.artist.name} - ${record.title}`}
     div.input-group
       label Catalog Number 
-      input(type='number', name='catalogNum', min='0' required)
+      input(type='number', name='catalogNum', min='0', value=(recordCopy === undefined ? "" : recordCopy.catalogNum), required)
     div.input-group
         label(for='condition') Condition
         select(name='condition' required)
           option(value='') --Please select it's condition--
-          option(value="Poor") Poor
-          option(value="Fair") Fair
-          option(value="Good") Good
-          option(value="New") New
+          each condition in ['Poor', 'Fair', 'Good', 'New']
+            if recordCopy
+              if recordCopy.condition===condition
+                option(value=recordCopy.condition selected) #{recordCopy.condition}
+              else
+                option(value=condition) #{condition}
+            else
+              option(value=condition) #{condition}
     div.input-group
         label Price (£)
-        input(type='number', name='price', min='0', step="0.01" required)
+        input(type='number', name='price', min='0', step="0.01", value=(recordCopy === undefined ? "" : recordCopy.price), required)
     button.btn.light-green(type='submit') Submit
     if errors
       ul
