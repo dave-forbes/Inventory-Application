@@ -4,8 +4,6 @@ const Genre = require("../models/genre");
 const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
 const Format = require("../models/format");
-const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Types;
 const { body, validationResult } = require("express-validator");
 
 // Display list of all artists.
@@ -18,8 +16,6 @@ exports.artist_list = asyncHandler(async (req, res, next) => {
   const filteredArtists = allArtists.filter(
     (artist) => artist.name[0] === firstLetter
   );
-
-  console.log(filteredArtists);
 
   res.render("index", {
     title: `All artists in ${firstLetter}`,
@@ -36,11 +32,9 @@ exports.artist_detail = asyncHandler(async (req, res, next) => {
   const allRecords = await Record.find({ artist: req.params.id }).exec();
   const artist = await Artist.findById(req.params.id).exec();
 
-  const artistToFilter = new ObjectId(req.params.id);
-
   // Filter records by artist
   const filteredRecords = allRecordCopies.filter((recordCopy) =>
-    recordCopy.record.artist.equals(artistToFilter)
+    recordCopy.record.artist.equals(artist._id)
   );
 
   res.render("artist_detail", {
@@ -114,7 +108,7 @@ exports.artist_update_get = asyncHandler(async (req, res, next) => {
 
 // Handle artist update on POST.
 exports.artist_update_post = [
-  body("name", "Genre name must contain at least 3 characters")
+  body("name", "Artist name must contain at least 3 characters")
     .trim()
     .isLength({ min: 3 })
     .escape(),
@@ -140,11 +134,9 @@ exports.artist_update_post = [
       const allRecords = await Record.find({ artist: req.params.id }).exec();
       const artist = await Artist.findById(req.params.id).exec();
 
-      const artistToFilter = new ObjectId(req.params.id);
-
       // Filter records by artist
       const filteredRecords = allRecordCopies.filter((recordCopy) =>
-        recordCopy.record.artist.equals(artistToFilter)
+        recordCopy.record.artist.equals(artist._id)
       );
 
       res.render("artist_detail", {
