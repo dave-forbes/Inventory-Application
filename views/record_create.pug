@@ -6,43 +6,66 @@ block styles
 block content
   div.nav
     div.links
-        a.focus.btn.light-blue New Record
+        a.focus.btn.light-blue #{title}
         a.btn.light-blue(href='/catalog/recordcopy/create') New Record Copy
         a.btn.light-blue(href='/catalog/artist/create') New Artist
         a.btn.light-blue(href='/catalog/genre/create') New Genre 
-  form(method='POST', enctype="multipart/form-data")
-    h1.form-title New Record
+  form(method="POST", enctype="multipart/form-data")
+    h1.form-title #{title}
     div.input-group
       label Title 
-      input(type='text', placeholder='--Please provide the title of this record--', name="title" required)
+      input(type='text', placeholder='--Please provide the title of this record--', name="title", value=(record===undefined ? '' : record.title)  required)
     div.input-group
       label(for='artist') Artist
-      select(name='artist' required)
+      select(name='artist', required)
         option(value='') --Please select an artist--
         for artist in artists
-            option(value=artist.name) #{artist.name}
+            if record
+              if artist._id.toString()===record.artist._id.toString()
+                option(value=artist._id selected) #{artist.name}
+              else
+                option(value=artist._id) #{artist.name}
+            else
+              option(value=artist._id) #{artist.name}
     div.input-group
       label Tracklist 
-      textarea(placeholder='--Please list tracks separated by comma--' name="tracklist" required, cols="30", rows="5")
+      textarea(placeholder='--Please list tracks separated by comma--', name="tracklist", required, cols="30", rows="5") #{tracklist && tracklist}
     div.input-group
       label(for='genre') Genre
       select(name='genre' required)
         option(value='') --Please select a genre--
         for genre in genres
-            option(value=genre.name) #{genre.name}
+            if record
+              if genre._id.toString()===record.genre._id.toString()
+                option(value=genre._id selected) #{genre.name}
+              else
+                option(value=genre._id) #{genre.name}
+            else
+              option(value=genre._id) #{genre.name}
     div.input-group
       label(for='format') Format
       select(name='format' required)
         option(value='') --Please select a format--
-        option(value='Album') Album
-        option(value='Single') Single
+        if record 
+          if record.format = 'Album'
+            option(value='Album' selected) Album
+            option(value='Single') Single
+          else 
+            option(value='Album') Album
+            option(value='Single' selected) Single
+        else   
+          option(value='Album') Album
+          option(value='Single') Single
     div.input-group
       label Year (YYYY) 
-      input(type='number', name='year', max='9999', pattern='\d{4}', placeholder='--Please enter the year released (YYYY)--', required)
+      input(type='number', name='year', max='9999', pattern='\d{4}', placeholder='--Please enter the year released (YYYY)--', value=(record===undefined ? '' : record.year), required)
     div.input-group
-      label Cover Art
+      label Cover Art 
+        if record 
+          span (Add new img to update or leave blank to keep existing.)
       input(type='file', name='image', accept='image/png, image/jpeg')
     button.btn.light-green(type='submit') Submit
+  
   if errors
       ul
         for error in errors

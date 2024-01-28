@@ -25,11 +25,11 @@ router.get("/record/:id/delete", record_controller.record_delete_get);
 // POST request to delete record.
 router.post("/record/:id/delete", record_controller.record_delete_post);
 
-// // GET request to update record.
-// router.get("/record/:id/update", record_controller.record_update_get);
+// GET request to update record.
+router.get("/record/:id/update", record_controller.record_update_get);
 
-// // POST request to update record.
-// router.post("/record/:id/update", record_controller.record_update_post);
+// POST request to update record.
+router.post("/record/:id/update", record_controller.record_update_post);
 
 // GET request for one record.
 router.get("/record/:id", record_controller.record_detail);

@@ -26,7 +26,7 @@ block content
         button.btn.light-red(type='submit') Delete?
     else  
       div.detail-links
-      a.btn.light-green Update 
+      a.btn.light-green(href=`/catalog/record/${record._id}/update`) Update 
       a.btn.light-red(href=`/catalog/record/${record._id}/delete`) Delete
     div.copies
       if record_copies.length 
