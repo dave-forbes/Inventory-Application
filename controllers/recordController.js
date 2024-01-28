@@ -12,9 +12,11 @@ const fs = require("fs");
 
 // Display list of all records.
 exports.index = asyncHandler(async (req, res, next) => {
-  const allRecordCopies = await RecordCopy.find().populate("record").exec();
-  const allGenres = await Genre.find().sort({ name: 1 }).exec();
-  const allYears = await Record.distinct("year");
+  const [allRecordCopies, allGenres, allYears] = await Promise.all([
+    RecordCopy.find().populate("record").exec(),
+    Genre.find().sort({ name: 1 }).exec(),
+    Record.distinct("year"),
+  ]);
 
   res.render("index", {
     title: "All records in stock",
@@ -59,6 +61,7 @@ exports.record_create_get = asyncHandler(async (req, res, next) => {
   res.render("record_create", {
     artists: allArtists,
     genres: allGenres,
+    title: "New Record",
   });
 });
 
@@ -104,9 +107,15 @@ exports.record_create_post = [
     // Extract the validation errors from a request.
     const errors = validationResult(req);
 
-    const artist = await Artist.findOne({ name: req.body.artist }).exec();
-    const genre = await Genre.findOne({ name: req.body.genre }).exec();
-    const format = await Format.findOne({ name: req.body.format }).exec();
+    const [artist, genre, format] = await Promise.all([
+      Artist.findById(req.body.artist).exec(),
+      Genre.findById(req.body.genre).exec(),
+      Format.findOne({ name: req.body.format }).exec(),
+    ]);
+
+    const imagePath = req.file
+      ? `/images/${req.file.filename}`
+      : "/images/default_cover_image.jpeg";
 
     // Create a Record object with escaped and trimmed data.
     const record = new Record({
@@ -115,13 +124,18 @@ exports.record_create_post = [
       tracklist: req.body.tracklist,
       format: format._id,
       genre: genre._id,
-      img: `/images/${req.file.filename}`,
+      img: imagePath,
       year: req.body.year,
     });
     if (!errors.isEmpty()) {
+      const [allArtists, allGenres] = await Promise.all([
+        Artist.find().sort({ name: 1 }).exec(),
+        Genre.find().sort({ name: 1 }).exec(),
+      ]);
       res.render("record_create", {
         artists: allArtists,
         genres: allGenres,
+        title: "New Record",
         errors: errors.array(),
       });
     } else {
@@ -174,12 +188,19 @@ exports.record_delete_post = asyncHandler(async (req, res, next) => {
 
     // Delete the associated image file
     const imagePath = path.join(parentDir, "public", record.img);
+    const defaultImagePath = path.join(
+      parentDir,
+      "public",
+      "/images/default_cover_image.jpeg"
+    );
 
-    if (fs.existsSync(imagePath)) {
-      fs.unlinkSync(imagePath);
-      console.log("Image deleted successfully");
-    } else {
-      console.log("Image not found");
+    if (imagePath !== defaultImagePath) {
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+        console.log("Image deleted successfully");
+      } else {
+        console.log("Image not found");
+      }
     }
 
     // Delete the record from the database
@@ -191,12 +212,99 @@ exports.record_delete_post = asyncHandler(async (req, res, next) => {
   }
 });
 
-// // Display book update form on GET.
-// exports.book_update_get = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: Book update GET");
-// });
+// Display record update form on GET.
+exports.record_update_get = asyncHandler(async (req, res, next) => {
+  const [allArtists, allGenres, record] = await Promise.all([
+    Artist.find().sort({ name: 1 }).exec(),
+    Genre.find().sort({ name: 1 }).exec(),
+    Record.findById(req.params.id),
+  ]);
 
-// // Handle book update on POST.
-// exports.book_update_post = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: Book update POST");
-// })
+  const tracklist = record.tracklist.join(", ");
+
+  res.render("record_create", {
+    artists: allArtists,
+    genres: allGenres,
+    title: "Update Record",
+    record: record,
+    tracklist: tracklist,
+  });
+});
+
+// Handle record update on POST.
+exports.record_update_post = [
+  upload.single("image"),
+
+  // convert tracklist to array
+  (req, res, next) => {
+    req.body.tracklist = convertToArray(req.body.tracklist);
+    next();
+  },
+
+  // validate and sanitize data
+  body("title", "Title must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("artist", "Artist must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("tracklist.*").escape({ ignore: ["'"] }),
+  body("genre", "Genre must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("format", "Format must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("genre", "Genre must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("year")
+    .isInt({ min: 1920, max: 2024 })
+    .withMessage("Catalog Number must be a number between 1920 and 2024"),
+
+  // create new record and save to database
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const [allArtists, allGenres, record] = await Promise.all([
+        Artist.find().sort({ name: 1 }).exec(),
+        Genre.find().sort({ name: 1 }).exec(),
+        Record.findById(req.params.id),
+      ]);
+      res.render("record_create", {
+        artists: allArtists,
+        genres: allGenres,
+        title: "Update Record",
+        record: record,
+      });
+    } else {
+      const [artist, genre, format, record] = await Promise.all([
+        Artist.findById(req.body.artist).exec(),
+        Genre.findById(req.body.genre).exec(),
+        Format.findOne({ name: req.body.format }).exec(),
+        Record.findById(req.params.id).exec(),
+      ]);
+      // Create a Record object with escaped and trimmed data.
+
+      const imagePath = req.file ? `/images/${req.file.filename}` : record.img;
+
+      await Record.findByIdAndUpdate(req.params.id, {
+        title: req.body.title,
+        artist: artist._id,
+        tracklist: req.body.tracklist,
+        format: format._id,
+        genre: genre._id,
+        img: imagePath,
+        year: req.body.year,
+      });
+
+      res.redirect(record.url);
+    }
+  }),
+];
