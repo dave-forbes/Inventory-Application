@@ -1,17 +1,10 @@
 const RecordCopy = require("../models/recordCopy");
-const Artist = require("../models/artist");
 const Genre = require("../models/genre");
 const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
-const Format = require("../models/format");
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
 const { body, validationResult } = require("express-validator");
-
-// // Display list of all Genre.
-// exports.genre_list = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: Genre list");
-// });
 
 // Display detail page for a specific Genre.
 exports.genre_detail = asyncHandler(async (req, res, next) => {

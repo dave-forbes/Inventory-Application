@@ -1,11 +1,7 @@
 const RecordCopy = require("../models/recordCopy");
-const Artist = require("../models/artist");
 const Genre = require("../models/genre");
 const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
-const Format = require("../models/format");
-const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Types;
 
 // Display detail page for a specific Genre.
 exports.year_list = asyncHandler(async (req, res, next) => {

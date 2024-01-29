@@ -3,7 +3,6 @@ const Artist = require("../models/artist");
 const Genre = require("../models/genre");
 const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
-const Format = require("../models/format");
 const { body, validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
