@@ -5,11 +5,11 @@ const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
 const Format = require("../models/format");
 const { body, validationResult } = require("express-validator");
-const convertToArray = require("../convertToArray");
-const upload = require("../multerSetup");
+const convertToArray = require("../javascripts/convertToArray");
+const upload = require("../javascripts/multerSetup");
 const path = require("path");
 const fs = require("fs");
-const arrayShuffle = require("../arrayShuffle");
+const arrayShuffle = require("../javascripts/arrayShuffle");
 
 // Display list of all records.
 exports.index = asyncHandler(async (req, res, next) => {
