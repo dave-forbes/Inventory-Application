@@ -11,15 +11,16 @@ header {
   flex-shrink: 0;
   background-color: #001549;
   color: white;
+  padding: 0 1rem;
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1065px;
+  max-width: 1600px;
   margin: 0 auto;
-  height: 100%
+  height: 100%;
 }
 
 .header-content>div {
