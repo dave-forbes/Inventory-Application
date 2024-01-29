@@ -96,3 +96,7 @@ a:hover {
 ::-webkit-scrollbar-thumb {
   background-color: #888;
 }
+
+.error-div {
+  margin-top: 5rem;
+}
