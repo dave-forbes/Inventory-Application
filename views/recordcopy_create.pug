@@ -27,7 +27,7 @@ block content
             option(value=record._id) #{`${record.artist.name} - ${record.title}`}
     div.input-group
       label Catalog Number 
-      input(type='number', name='catalogNum', min='0', value=(recordCopy === undefined ? "" : recordCopy.catalogNum), required)
+      input(type='number', name='catalogNum', min='0', placeholder='--Please enter a 5 digit catalog number--', value=(recordCopy === undefined ? "" : recordCopy.catalogNum), required)
     div.input-group
         label(for='condition') Condition
         select(name='condition' required)
@@ -42,7 +42,7 @@ block content
               option(value=condition) #{condition}
     div.input-group
         label Price (£)
-        input(type='number', name='price', min='0', step="0.01", value=(recordCopy === undefined ? "" : recordCopy.price), required)
+        input(type='number', name='price', min='0', step="0.01", placeholder='--Please enter a price--', value=(recordCopy === undefined ? "" : recordCopy.price), required)
     button.btn.light-green(type='submit') Submit
     if errors
       ul
