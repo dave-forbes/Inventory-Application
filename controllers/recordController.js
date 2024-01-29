@@ -9,6 +9,7 @@ const convertToArray = require("../convertToArray");
 const upload = require("../multerSetup");
 const path = require("path");
 const fs = require("fs");
+const arrayShuffle = require("../arrayShuffle");
 
 // Display list of all records.
 exports.index = asyncHandler(async (req, res, next) => {
@@ -20,7 +21,7 @@ exports.index = asyncHandler(async (req, res, next) => {
 
   res.render("index", {
     title: "All records copies in stock",
-    recordCopies: allRecordCopies,
+    recordCopies: arrayShuffle(allRecordCopies),
     years: allYears,
     genres: allGenres,
   });
