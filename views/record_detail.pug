@@ -3,42 +3,44 @@ extends layout
 block styles  
   link(rel='stylesheet', href='/stylesheets/detail.css')
 
-block content 
+block content
+  div.flex
+    h1.detail-title Record Detail
+    a.sml-btn.light-green(href=`/catalog/recordcopies/${record._id}`) See copies
   div.detail-grid
     img.detail-img(src=record.img, alt='Description of the image')
-    div.detail-info
-      p #[strong Title:] 
-        a(href=record.url) #{record.title} 
-      p #[strong Artist:] 
-        a(href=record.artist.url) #{record.artist.name}
-      div
+    ul.detail-info
+      li
+        p #[strong Title:] 
+        p
+          a(href=record.url) #{record.title}
+      li 
+        p #[strong Artist:] 
+        p 
+          a(href=record.artist.url) #{record.artist.name}
+      li
         p #[strong Tracklist:]
-        ol.tracks 
-          each track in record.tracklist
-            li #{track}
-      p #[strong Genre:] #{record.genre.name}
-      p #[strong Format:] #{record.format.name}
-      p #[strong Year Released:] #{record.year}
+        div
+          ol.tracks 
+            each track in record.tracklist
+              li #{track}
+      li 
+        p #[strong Genre:] 
+        p #{record.genre.name}
+      li
+        p #[strong Format:]
+        p #{record.format.name}
+      li
+        p #[strong Year Released:]
+        p #{record.year}
     if toDelete
       p Are you sure you want to delete #{record.title} by #{record.artist.name}?
       form(method="post")
         input(type='hidden', name='recordid', value=record._id ) 
-        button.btn.light-red(type='submit') Delete?
+        div.detail-links
+          button.btn.light-red(type='submit') Delete
+          a.btn.light-green(href=`/catalog/record/${record._id}`) Cancel
     else  
       div.detail-links
-      a.btn.light-green(href=`/catalog/record/${record._id}/update`) Update 
-      a.btn.light-red(href=`/catalog/record/${record._id}/delete`) Delete
-    div.copies
-      if record_copies.length 
-        p #[strong Copies in stock:]
-        ul.in-stock 
-            each recordCopy in record_copies
-              li.detail-copies-in-stock
-                img.small-detail-img(src=record.img, alt='Description of the image') 
-                p #[strong Catalog Number:] #{recordCopy.catalogNum}
-                p #[strong Condition:] #{recordCopy.condition}
-                p #[strong Price:] £#{recordCopy.price}
-                a.btn.light-green(href=recordCopy.url) Info
-      else 
-        p No copies in stock, add new copy?
-        a.btn.light-green(href=`/catalog/recordcopy/create`) New
+        a.btn.light-green(href=`/catalog/record/${record._id}/update`) Update 
+        a.btn.light-red(href=`/catalog/record/${record._id}/delete`) Delete

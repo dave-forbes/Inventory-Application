@@ -3,23 +3,35 @@ extends layout
 block styles  
   link(rel='stylesheet', href='/stylesheets/detail.css')
 
-block content 
+block content
+  h1.detail-title Record Copy Details
   div.detail-grid
     img.detail-img(src=recordCopy.record.img, alt='Description of the image')
-    div.detail-info
-      p #[strong Title:] 
-        a(href=recordCopy.record.url) #{recordCopy.record.title} 
-      p #[strong Artist:] 
-        a(href=artist.url) #{artist.name}
-      p #[strong Catalog Number:] #{recordCopy.catalogNum}
-      p #[strong Condition:] #{recordCopy.condition}
-      p #[strong Price:] £#{recordCopy.price}
+    ul.detail-info
+      li
+        p #[strong Record:] 
+        p 
+          a(href=recordCopy.record.url) #{recordCopy.record.title}
+      li 
+        p #[strong Artist:] 
+        p 
+          a(href=artist.url) #{artist.name}
+      li
+        p #[strong Catalog Number:] 
+        p #{recordCopy.catalogNum}
+      li
+        p #[strong Condition:]
+        p #{recordCopy.condition}
+      li
+        p #[strong Price:]
+        p £#{recordCopy.price}
     if toDelete
-      p Are you sure you want to delete this copy of #{recordCopy.record.title} by #{artist.name}?
-      form.delete-form(method="post")
-        input(type='hidden', name='recordcopyid', value=recordCopy._id ) 
-        button.btn.light-red(type='submit') Delete?
-        a.btn.light-green(href=`/catalog/recordcopy/${recordCopy._id}`) Cancel
+      div.detail-links
+        p Are you sure you want to delete this copy of #{recordCopy.record.title} by #{artist.name}?
+        form.delete-form(method="post")
+          input(type='hidden', name='recordcopyid', value=recordCopy._id ) 
+          button.btn.light-red(type='submit') Delete?
+          a.btn.light-green(href=`/catalog/recordcopy/${recordCopy._id}`) Cancel
     else  
       div.detail-links
         a.btn.light-green(href=`/catalog/recordcopy/${recordCopy._id}/update`) Update 
