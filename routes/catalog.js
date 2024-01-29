@@ -127,8 +127,8 @@ router.post(
 // GET request for one recordcopy.
 router.get("/recordcopy/:id", record_copy_controller.recordcopy_detail);
 
-// // GET request for list of all recordcopy.
-// router.get("/recordcopies", record_copy_controller.recordcopy_list);
+// GET request for list of all recordcopy.
+router.get("/recordcopies/:id", record_copy_controller.recordcopy_list);
 
 router.get("/year/:id", year_controller.year_list);
 
