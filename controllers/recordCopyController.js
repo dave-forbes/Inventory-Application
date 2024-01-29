@@ -2,12 +2,30 @@ const RecordCopy = require("../models/recordCopy");
 const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
 const Artist = require("../models/artist");
+const Genre = require("../models/genre");
 const { body, validationResult } = require("express-validator");
 
-// // Display list of all RecordCopies.
-// exports.recordcopy_list = asyncHandler(async (req, res, next) => {
-//   res.send("NOT IMPLEMENTED: RecordCopy list");
-// });
+// Display list of all RecordCopies.
+exports.recordcopy_list = asyncHandler(async (req, res, next) => {
+  const record = await Record.findById(req.params.id).exec();
+  const [allRecordCopies, allGenres, allYears] = await Promise.all([
+    RecordCopy.find().populate("record").exec(),
+    Genre.find().sort({ name: 1 }).exec(),
+    Record.distinct("year"),
+  ]);
+
+  const filteredRecords = allRecordCopies.filter(
+    (recordCopy) => recordCopy.record.title == record.title
+  );
+
+  res.render("index", {
+    title: `All copies of ${record.title} in stock`,
+    recordCopies: filteredRecords,
+    years: allYears,
+    genres: allGenres,
+    filterType: "record",
+  });
+});
 
 // Display detail page for a specific RecordCopy.
 exports.recordcopy_detail = asyncHandler(async (req, res, next) => {
