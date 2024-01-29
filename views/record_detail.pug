@@ -34,12 +34,18 @@ block content
         p #[strong Year Released:]
         p #{record.year}
     if toDelete
-      p Are you sure you want to delete #{record.title} by #{record.artist.name}?
-      form(method="post")
-        input(type='hidden', name='recordid', value=record._id ) 
-        div.detail-links
-          button.btn.light-red(type='submit') Delete
-          a.btn.light-green(href=`/catalog/record/${record._id}`) Cancel
+      if record_copies.length === 0
+        p Are you sure you want to delete #{record.title} by #{record.artist.name}?
+        form.delete-form(method="post")
+          input(type='hidden', name='recordid', value=record._id )
+          input(type='password', name='password' placeholder='Please enter password' required) 
+          div.detail-links
+            button.btn.light-red(type='submit') Delete
+            a.btn.light-green(href=`/catalog/record/${record._id}`) Cancel
+      else
+        div.flex 
+          p Please delete remaining copies of the record first.
+          a.sml-btn.light-green(href=`/catalog/recordcopies/${record._id}`) See copies
     else  
       div.detail-links
         a.btn.light-green(href=`/catalog/record/${record._id}/update`) Update 

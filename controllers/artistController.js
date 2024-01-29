@@ -6,6 +6,7 @@ const Record = require("../models/record");
 const { body, validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
+const passwordCheck = require("../javascripts/passwordCheck");
 
 // Display list of all artists.
 exports.artist_list = asyncHandler(async (req, res, next) => {
@@ -49,6 +50,7 @@ exports.artist_detail = asyncHandler(async (req, res, next) => {
     years: allYears,
     genres: allGenres,
     filterType: "artist",
+    id: artist._id,
   });
 });
 
@@ -103,19 +105,25 @@ exports.artist_delete_get = asyncHandler(async (req, res, next) => {
 });
 
 // Handle artist delete on POST.
-exports.artist_delete_post = asyncHandler(async (req, res, next) => {
-  await Artist.findByIdAndDelete(req.body.artistid);
-  res.redirect("/");
-});
+exports.artist_delete_post = [
+  (req, res, next) => passwordCheck(req, res, next),
+
+  asyncHandler(async (req, res, next) => {
+    await Artist.findByIdAndDelete(req.body.artistid);
+    res.redirect("/");
+  }),
+];
 
 // Display artist update form on GET.
 exports.artist_update_get = asyncHandler(async (req, res, next) => {
   const artist = await Artist.findById(req.params.id);
-  res.render("artist_create", { title: "New Artist", artist: artist });
+  res.render("artist_create", { title: "Update Artist", artist: artist });
 });
 
 // Handle artist update on POST.
 exports.artist_update_post = [
+  (req, res, next) => passwordCheck(req, res, next),
+
   body("name", "Artist name must contain at least 3 characters")
     .trim()
     .isLength({ min: 3 })
@@ -138,19 +146,26 @@ exports.artist_update_post = [
         name: req.body.name,
       });
 
-      const allRecordCopies = await RecordCopy.find().populate("record").exec();
-      const allRecords = await Record.find({ artist: req.params.id }).exec();
-      const artist = await Artist.findById(req.params.id).exec();
+      const [artist, allRecordCopies, allGenres, allYears] = await Promise.all([
+        Artist.findById(req.params.id).exec(),
+        RecordCopy.find().populate("record").exec(),
+        Genre.find().sort({ name: 1 }).exec(),
+        Record.distinct("year"),
+      ]);
 
-      // Filter records by artist
+      const artistToFilter = new ObjectId(req.params.id);
+
       const filteredRecords = allRecordCopies.filter((recordCopy) =>
-        recordCopy.record.artist.equals(artist._id)
+        recordCopy.record.artist.equals(artistToFilter)
       );
 
-      res.render("artist_detail", {
-        artist: artist,
-        record_copies: filteredRecords,
-        records: allRecords,
+      res.render("index", {
+        title: `All copies by artist ${artist.name} in stock`,
+        recordCopies: filteredRecords,
+        years: allYears,
+        genres: allGenres,
+        filterType: "artist",
+        id: artist._id,
       });
     }
   }),

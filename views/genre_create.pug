@@ -16,6 +16,10 @@ block content
     div.input-group
       label Genre Name 
       input(type='text', name='name', maxlength='12', placeholder='--Please enter the genre name--', value=(genre===undefined ? '' : genre.name) required)
+      if genre 
+        div.input-group
+        label(for='password') Please enter admin password 
+        input(type='password', name='password' required)
     button.btn.light-green(type='submit') Submit
     if errors
       div

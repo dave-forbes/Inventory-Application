@@ -29,7 +29,8 @@ block content
       div.detail-links
         p Are you sure you want to delete this copy of #{recordCopy.record.title} by #{artist.name}?
         form.delete-form(method="post")
-          input(type='hidden', name='recordcopyid', value=recordCopy._id ) 
+          input(type='hidden', name='recordcopyid', value=recordCopy._id )
+          input(type='password', name='password' placeholder='Please enter password' required) 
           button.btn.light-red(type='submit') Delete?
           a.btn.light-green(href=`/catalog/recordcopy/${recordCopy._id}`) Cancel
     else  

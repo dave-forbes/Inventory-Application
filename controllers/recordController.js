@@ -10,6 +10,7 @@ const upload = require("../javascripts/multerSetup");
 const path = require("path");
 const fs = require("fs");
 const arrayShuffle = require("../javascripts/arrayShuffle");
+const passwordCheck = require("../javascripts/passwordCheck");
 
 // Display list of all records.
 exports.index = asyncHandler(async (req, res, next) => {
@@ -182,44 +183,48 @@ exports.record_delete_get = asyncHandler(async (req, res, next) => {
 });
 
 // Handle record delete on POST.
-exports.record_delete_post = asyncHandler(async (req, res, next) => {
-  try {
-    const recordId = req.params.id;
+exports.record_delete_post = [
+  (req, res, next) => passwordCheck(req, res, next),
 
-    // Fetch the record from the database to get the associated image filename
-    const record = await Record.findById(recordId);
+  asyncHandler(async (req, res, next) => {
+    try {
+      const recordId = req.params.id;
 
-    if (!record) {
-      return res.status(404).json({ error: "Record not found" });
-    }
+      // Fetch the record from the database to get the associated image filename
+      const record = await Record.findById(recordId);
 
-    const parentDir = path.resolve(__dirname, "..");
-
-    // Delete the associated image file
-    const imagePath = path.join(parentDir, "public", record.img);
-    const defaultImagePath = path.join(
-      parentDir,
-      "public",
-      "/images/default_cover_image.jpeg"
-    );
-
-    if (imagePath !== defaultImagePath) {
-      if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath);
-        console.log("Image deleted successfully");
-      } else {
-        console.log("Image not found");
+      if (!record) {
+        return res.status(404).json({ error: "Record not found" });
       }
-    }
 
-    // Delete the record from the database
-    await Record.findByIdAndDelete(recordId);
-    res.redirect("/");
-  } catch (error) {
-    console.error(error);
-    res.render("error", { error: error });
-  }
-});
+      const parentDir = path.resolve(__dirname, "..");
+
+      // Delete the associated image file
+      const imagePath = path.join(parentDir, "public", record.img);
+      const defaultImagePath = path.join(
+        parentDir,
+        "public",
+        "/images/default_cover_image.jpeg"
+      );
+
+      if (imagePath !== defaultImagePath) {
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+          console.log("Image deleted successfully");
+        } else {
+          console.log("Image not found");
+        }
+      }
+
+      // Delete the record from the database
+      await Record.findByIdAndDelete(recordId);
+      res.redirect("/");
+    } catch (error) {
+      console.error(error);
+      res.render("error", { error: error });
+    }
+  }),
+];
 
 // Display record update form on GET.
 exports.record_update_get = asyncHandler(async (req, res, next) => {
@@ -243,6 +248,8 @@ exports.record_update_get = asyncHandler(async (req, res, next) => {
 // Handle record update on POST.
 exports.record_update_post = [
   upload.single("image"),
+
+  (req, res, next) => passwordCheck(req, res, next),
 
   // convert tracklist to array
   (req, res, next) => {
@@ -278,6 +285,8 @@ exports.record_update_post = [
 
   (req, res, next) => {
     //unescape apostrophes
+    req.body.title = req.body.title.replaceAll("&#x27;", "'");
+
     req.body.tracklist = req.body.tracklist.map((track) => {
       return track.replaceAll("&#x27;", "'");
     });

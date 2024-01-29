@@ -2,11 +2,15 @@ extends layout
 
 block styles  
   link(rel='stylesheet', href='/stylesheets/delete.css')
-
+  link(rel='stylesheet', href='/stylesheets/create.css')
+  
 block content 
   div.centered 
     p Are you sure you want to delete the #{genre.name} genre?
   
     form(method="post")
       input(type='hidden', name='genreid', value=genre._id ) 
+      div.input-group
+        label(for='password') Please enter admin password 
+        input(type='password', name='password' required)
       button.btn.light-red(type='submit') Delete?

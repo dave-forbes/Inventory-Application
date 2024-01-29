@@ -5,6 +5,7 @@ const Record = require("../models/record");
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
 const { body, validationResult } = require("express-validator");
+const passwordCheck = require("../javascripts/passwordCheck");
 
 // Display detail page for a specific Genre.
 exports.genre_detail = asyncHandler(async (req, res, next) => {
@@ -79,10 +80,14 @@ exports.genre_delete_get = asyncHandler(async (req, res, next) => {
 });
 
 // Handle Genre delete on POST.
-exports.genre_delete_post = asyncHandler(async (req, res, next) => {
-  await Genre.findByIdAndDelete(req.body.genreid);
-  res.redirect("/");
-});
+exports.genre_delete_post = [
+  (req, res, next) => passwordCheck(req, res, next),
+
+  asyncHandler(async (req, res, next) => {
+    await Genre.findByIdAndDelete(req.body.genreid);
+    res.redirect("/");
+  }),
+];
 
 // Display Genre update form on GET.
 exports.genre_update_get = asyncHandler(async (req, res, next) => {
@@ -92,6 +97,8 @@ exports.genre_update_get = asyncHandler(async (req, res, next) => {
 
 // Handle Genre update on POST.
 exports.genre_update_post = [
+  (req, res, next) => passwordCheck(req, res, next),
+
   body("name", "Genre name must contain at least 3 characters")
     .trim()
     .isLength({ min: 3 })

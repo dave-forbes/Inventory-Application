@@ -4,6 +4,7 @@ const Record = require("../models/record");
 const Artist = require("../models/artist");
 const Genre = require("../models/genre");
 const { body, validationResult } = require("express-validator");
+const passwordCheck = require("../javascripts/passwordCheck");
 
 // Display list of all RecordCopies.
 exports.recordcopy_list = asyncHandler(async (req, res, next) => {
@@ -123,10 +124,14 @@ exports.recordcopy_delete_get = asyncHandler(async (req, res, next) => {
 });
 
 // Handle RecordCopy delete on POST.
-exports.recordcopy_delete_post = asyncHandler(async (req, res, next) => {
-  await RecordCopy.findByIdAndDelete(req.body.recordcopyid);
-  res.redirect("/");
-});
+exports.recordcopy_delete_post = [
+  (req, res, next) => passwordCheck(req, res, next),
+
+  asyncHandler(async (req, res, next) => {
+    await RecordCopy.findByIdAndDelete(req.body.recordcopyid);
+    res.redirect("/");
+  }),
+];
 
 // Display RecordCopy update form on GET.
 exports.recordcopy_update_get = asyncHandler(async (req, res, next) => {
@@ -149,6 +154,8 @@ exports.recordcopy_update_get = asyncHandler(async (req, res, next) => {
 
 // Handle RecordCopy update on POST.
 exports.recordcopy_update_post = [
+  (req, res, next) => passwordCheck(req, res, next),
+
   // Validate and sanitize fields.
   body("record", "Record must be specified")
     .trim()

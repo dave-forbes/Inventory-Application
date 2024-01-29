@@ -9,13 +9,17 @@ block content
     div.links
         a.btn.light-blue(href='/catalog/record/create') New Record
         a.btn.light-blue(href='/catalog/recordcopy/create') New Copy
-        a.focus.btn.light-blue New Artist
+        a.focus.btn.light-blue #{title}
         a.btn.light-blue(href='/catalog/genre/create') New Genre 
   form(method='POST')
     h1.form-title #{title}
     div.input-group
       label Artist Name 
       input(type='text', name='name', maxlength='30', placeholder='--Please enter the artist name--', value=(artist===undefined ? '' : artist.name) required)
+      if artist 
+        div.input-group
+        label(for='password') Please enter admin password 
+        input(type='password', name='password' required)
     button.btn.light-green(type='submit') Submit
     if errors
       div
