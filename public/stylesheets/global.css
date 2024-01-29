@@ -23,6 +23,15 @@ img {
   aspect-ratio: 1;
 }
 
+a {
+  transition: all 0.2s;
+}
+
+a:hover {
+  background-color: black;
+  color: white;
+}
+
 .btn {
   color: black;
   font-size: 1rem;
