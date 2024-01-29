@@ -36,7 +36,10 @@ exports.recordcopy_create_get = asyncHandler(async (req, res, next) => {
     .populate("artist")
     .populate("genre")
     .exec();
-  res.render("recordcopy_create", { record_list: allRecords });
+  res.render("recordcopy_create", {
+    record_list: allRecords,
+    title: "New Copy",
+  });
 });
 
 // Handle RecordCopy create on POST.
