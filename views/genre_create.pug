@@ -8,9 +8,9 @@ block content
   div.nav
     div.links
         a.btn.light-blue(href='/catalog/record/create') New Record
-        a.btn.light-blue(href='/catalog/recordcopy/create') New Record Copy
+        a.btn.light-blue(href='/catalog/recordcopy/create') New Copy
         a.btn.light-blue(href='/catalog/artist/create') New Artist
-        a.focus.btn.light-blue New Genre 
+        a.focus.btn.light-blue #{title} 
   form(method='POST')
     h1.form-title #{title}
     div.input-group
