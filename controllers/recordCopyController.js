@@ -169,9 +169,6 @@ exports.recordcopy_update_post = [
 
       const recordCopy = await RecordCopy.findById(req.params.id);
 
-      await recordCopy.save();
-      res.redirect(recordCopy.url);
-
       await RecordCopy.findByIdAndUpdate(req.params.id, {
         record: req.body.record,
         catalogNum: req.body.catalogNum,
