@@ -106,7 +106,7 @@ exports.record_create_post = [
   (req, res, next) => {
     //unescape apostrophes
     req.body.tracklist = req.body.tracklist.map((track) => {
-      return track.replace("&#x27;", "'");
+      return track.replaceAll("&#x27;", "'");
     });
     next();
   },
@@ -279,7 +279,7 @@ exports.record_update_post = [
   (req, res, next) => {
     //unescape apostrophes
     req.body.tracklist = req.body.tracklist.map((track) => {
-      return track.replace("&#x27;", "'");
+      return track.replaceAll("&#x27;", "'");
     });
     next();
   },
