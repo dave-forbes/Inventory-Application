@@ -37,13 +37,14 @@ block content
       case listType 
         when "artist"
           if artists.length 
-            ul.artist-list
-              each artist in artists 
-                a(href=artist.url) #{artist.name}
+            div.flex
+              ul.artist-list
+                each artist in artists 
+                  a(href=artist.url) #{artist.name}
           else 
-            p No artists in #{firstLetter}, add new artist?
+            p.flex No artists in #{firstLetter}, add new artist?
             br
-            a.btn.light-green(href='/catalog/artist/create') New Artist
+            a.flex.btn.light-green(href='/catalog/artist/create') New Artist
         default
           if recordCopies.length
             li.top 
