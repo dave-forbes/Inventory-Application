@@ -48,7 +48,7 @@ exports.artist_detail = asyncHandler(async (req, res, next) => {
     recordCopies: filteredRecords,
     years: allYears,
     genres: allGenres,
-    filterType: "record",
+    filterType: "artist",
   });
 });
 
