@@ -85,6 +85,7 @@
 .result-grid a {
   color: black;
   text-decoration: none;
+  align-self: center;
 }
 
 .layout-grid a:hover {
