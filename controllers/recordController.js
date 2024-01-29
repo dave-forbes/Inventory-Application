@@ -19,7 +19,7 @@ exports.index = asyncHandler(async (req, res, next) => {
   ]);
 
   res.render("index", {
-    title: "All records in stock",
+    title: "All records copies in stock",
     recordCopies: allRecordCopies,
     years: allYears,
     genres: allGenres,
