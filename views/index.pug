@@ -64,11 +64,12 @@ block content
                     a.sml-btn.light-green(href=recordCopy.url) Details
           else
             if filterType.length
-              p.flex There are no copies in this #{filterType}. Add new record or delete #{filterType}?
+              p.flex There are no copies for this #{filterType}. Add new record or copy or delete #{filterType}?
               br
               div.flex
-                a.btn.light-green(href=`/catalog/record/create`) New Record
+                a.btn.light-green(href=`/catalog/record/create`) New record
+                a.btn.light-green(href=`/catalog/recordcopy/create`) New copy
                 a.btn.light-red(href=`/catalog/${filterType}/${id}/delete`) Delete
             else 
-              p.flex There are no records.
+              p.flex There are no record copies.
     
