@@ -5,6 +5,8 @@ const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
 const Format = require("../models/format");
 const { body, validationResult } = require("express-validator");
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Types;
 
 // Display list of all artists.
 exports.artist_list = asyncHandler(async (req, res, next) => {
@@ -29,19 +31,25 @@ exports.artist_list = asyncHandler(async (req, res, next) => {
 
 // Display detail page for a specific artist.
 exports.artist_detail = asyncHandler(async (req, res, next) => {
-  const allRecordCopies = await RecordCopy.find().populate("record").exec();
-  const allRecords = await Record.find({ artist: req.params.id }).exec();
-  const artist = await Artist.findById(req.params.id).exec();
+  const [artist, allRecordCopies, allGenres, allYears] = await Promise.all([
+    Artist.findById(req.params.id).exec(),
+    RecordCopy.find().populate("record").exec(),
+    Genre.find().sort({ name: 1 }).exec(),
+    Record.distinct("year"),
+  ]);
 
-  // Filter records by artist
+  const artistToFilter = new ObjectId(req.params.id);
+
   const filteredRecords = allRecordCopies.filter((recordCopy) =>
-    recordCopy.record.artist.equals(artist._id)
+    recordCopy.record.artist.equals(artistToFilter)
   );
 
-  res.render("artist_detail", {
-    artist: artist,
-    record_copies: filteredRecords,
-    records: allRecords,
+  res.render("index", {
+    title: `All copies by artist ${artist.name} in stock`,
+    recordCopies: filteredRecords,
+    years: allYears,
+    genres: allGenres,
+    filterType: "record",
   });
 });
 
