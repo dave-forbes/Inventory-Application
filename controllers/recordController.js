@@ -102,6 +102,14 @@ exports.record_create_post = [
     .isInt({ min: 1920, max: 2024 })
     .withMessage("Catalog Number must be a number between 1920 and 2024"),
 
+  (req, res, next) => {
+    //unescape apostrophes
+    req.body.tracklist = req.body.tracklist.map((track) => {
+      return track.replace("&#x27;", "'");
+    });
+    next();
+  },
+
   // create new record and save to database
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
@@ -266,6 +274,14 @@ exports.record_update_post = [
   body("year")
     .isInt({ min: 1920, max: 2024 })
     .withMessage("Catalog Number must be a number between 1920 and 2024"),
+
+  (req, res, next) => {
+    //unescape apostrophes
+    req.body.tracklist = req.body.tracklist.map((track) => {
+      return track.replace("&#x27;", "'");
+    });
+    next();
+  },
 
   // create new record and save to database
   asyncHandler(async (req, res, next) => {
