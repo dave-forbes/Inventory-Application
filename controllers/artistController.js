@@ -23,6 +23,7 @@ exports.artist_list = asyncHandler(async (req, res, next) => {
     genres: allGenres,
     artists: filteredArtists,
     listType: "artist",
+    firstLetter: firstLetter,
   });
 });
 
