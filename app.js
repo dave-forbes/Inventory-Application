@@ -11,19 +11,21 @@ const app = express();
 
 // Set up mongoose connection
 const mongoose = require("mongoose");
-let mongoDBString;
-
+require("dotenv").config();
+let mongoURI;
 if (process.env.MONGODB_URI) {
-  mongoDBString = process.env.MONGODB_URI;
+  // production
+  mongoURI = process.env.MONGODB_URI;
 } else {
-  mongoDBString = require("./mongoDB");
+  // development
+  mongoURI = process.env.MONGODB_URI;
 }
 mongoose.set("strictQuery", false);
 main().catch((err) => console.error("MongoDB connection error:", err));
 
 async function main() {
   try {
-    await mongoose.connect(mongoDBString);
+    await mongoose.connect(mongoURI);
     console.log("Connected to MongoDB");
   } catch (error) {
     console.error("MongoDB connection error:", error);
