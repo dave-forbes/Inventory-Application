@@ -1,21 +1,17 @@
-const RecordCopy = require("../models/recordCopy");
 const Genre = require("../models/genre");
 const asyncHandler = require("express-async-handler");
-const Record = require("../models/record");
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
 const { body, validationResult } = require("express-validator");
 const passwordCheck = require("../javascripts/passwordCheck");
+const getIndexData = require("../javascripts/getIndexData");
 
-// Display detail page for a specific Genre.
-exports.genre_detail = asyncHandler(async (req, res, next) => {
-  const allRecordCopies = await RecordCopy.find().populate("record").exec();
-  const allGenres = await Genre.find().sort({ name: 1 }).exec();
-  const allYears = await Record.distinct("year");
+const renderGenreIndex = async (res, genreId) => {
+  const { allRecordCopies, allGenres, uniqueDecades } = await getIndexData();
 
-  const genreToFilter = new ObjectId(req.params.id);
+  const genreToFilter = new ObjectId(genreId);
 
-  const genre = await Genre.findOne({ _id: genreToFilter });
+  const genre = await Genre.findById(genreToFilter);
 
   // Filter records by genre
   const filteredRecords = allRecordCopies.filter((recordCopy) =>
@@ -26,10 +22,15 @@ exports.genre_detail = asyncHandler(async (req, res, next) => {
     title: `All ${genre.name} records in stock`,
     recordCopies: filteredRecords,
     filterType: "genre",
-    id: req.params.id,
-    years: allYears,
+    id: genreId,
+    decades: uniqueDecades,
     genres: allGenres,
   });
+};
+
+// Display all record copies for a specific Genre.
+exports.genre_detail = asyncHandler(async (req, res, next) => {
+  await renderGenreIndex(res, req.params.id);
 });
 
 // Display Genre create form on GET.
@@ -43,6 +44,12 @@ exports.genre_create_post = [
     .trim()
     .isLength({ min: 3 })
     .escape(),
+
+  (req, res, next) => {
+    //unescape apostrophes
+    req.body.name = req.body.name.replaceAll("&#x27;", "'");
+    next();
+  },
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
@@ -104,6 +111,12 @@ exports.genre_update_post = [
     .isLength({ min: 3 })
     .escape(),
 
+  (req, res, next) => {
+    //unescape apostrophes
+    req.body.name = req.body.name.replaceAll("&#x27;", "'");
+    next();
+  },
+
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
     const genre = await Genre.findById(req.params.id);
@@ -119,26 +132,7 @@ exports.genre_update_post = [
       // Data from form is valid.
       await Genre.findByIdAndUpdate(req.params.id, { name: req.body.name });
 
-      const allRecordCopies = await RecordCopy.find().populate("record").exec();
-      const allGenres = await Genre.find().sort({ name: 1 }).exec();
-      const allYears = await Record.distinct("year");
-
-      const genreToFilter = new ObjectId(req.params.id);
-
-      const genre = await Genre.findOne({ _id: genreToFilter });
-
-      // Filter records by genre
-      const filteredRecords = allRecordCopies.filter((recordCopy) =>
-        recordCopy.record.genre.equals(genreToFilter)
-      );
-      res.render("index", {
-        title: `All ${genre.name} records in stock`,
-        recordCopies: filteredRecords,
-        filterType: "genre",
-        id: genre._id,
-        years: allYears,
-        genres: allGenres,
-      });
+      await renderGenreIndex(res, req.params.id);
     }
   }),
 ];

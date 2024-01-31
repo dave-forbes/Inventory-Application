@@ -1,18 +1,15 @@
-const RecordCopy = require("../models/recordCopy");
 const Artist = require("../models/artist");
-const Genre = require("../models/genre");
 const asyncHandler = require("express-async-handler");
-const Record = require("../models/record");
 const { body, validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
 const passwordCheck = require("../javascripts/passwordCheck");
+const getIndexData = require("../javascripts/getIndexData");
 
-// Display list of all artists.
+// Display list of all artists whose names start with selected letter.
 exports.artist_list = asyncHandler(async (req, res, next) => {
+  const { allGenres, uniqueDecades } = await getIndexData();
   const allArtists = await Artist.find().exec();
-  const allGenres = await Genre.find().sort({ name: 1 }).exec();
-  const allYears = await Record.distinct("year");
 
   const firstLetter = req.params.id;
   const filteredArtists = allArtists.filter(
@@ -21,7 +18,7 @@ exports.artist_list = asyncHandler(async (req, res, next) => {
 
   res.render("index", {
     title: `All artists in ${firstLetter}`,
-    years: allYears,
+    decades: uniqueDecades,
     genres: allGenres,
     artists: filteredArtists,
     listType: "artist",
@@ -29,16 +26,11 @@ exports.artist_list = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Display detail page for a specific artist.
-exports.artist_detail = asyncHandler(async (req, res, next) => {
-  const [artist, allRecordCopies, allGenres, allYears] = await Promise.all([
-    Artist.findById(req.params.id).exec(),
-    RecordCopy.find().populate("record").exec(),
-    Genre.find().sort({ name: 1 }).exec(),
-    Record.distinct("year"),
-  ]);
+const renderArtistIndex = async (res, artistid) => {
+  const artist = await Artist.findById(artistid).exec();
+  const { allRecordCopies, allGenres, uniqueDecades } = await getIndexData();
 
-  const artistToFilter = new ObjectId(req.params.id);
+  const artistToFilter = new ObjectId(artistid);
 
   const filteredRecords = allRecordCopies.filter((recordCopy) =>
     recordCopy.record.artist.equals(artistToFilter)
@@ -47,11 +39,16 @@ exports.artist_detail = asyncHandler(async (req, res, next) => {
   res.render("index", {
     title: `All copies by artist ${artist.name} in stock`,
     recordCopies: filteredRecords,
-    years: allYears,
+    decades: uniqueDecades,
     genres: allGenres,
     filterType: "artist",
     id: artist._id,
   });
+};
+
+// Display records copies by specific artist in stock.
+exports.artist_detail = asyncHandler(async (req, res, next) => {
+  await renderArtistIndex(res, req.params.id);
 });
 
 // Display artist create form on GET.
@@ -65,6 +62,12 @@ exports.artist_create_post = [
     .trim()
     .isLength({ min: 3 })
     .escape(),
+
+  (req, res, next) => {
+    //unescape apostrophes
+    req.body.name = req.body.name.replaceAll("&#x27;", "'");
+    next();
+  },
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
@@ -129,6 +132,12 @@ exports.artist_update_post = [
     .isLength({ min: 3 })
     .escape(),
 
+  (req, res, next) => {
+    //unescape apostrophes
+    req.body.name = req.body.name.replaceAll("&#x27;", "'");
+    next();
+  },
+
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
     const artist = await Artist.findById(req.params.id);
@@ -146,27 +155,7 @@ exports.artist_update_post = [
         name: req.body.name,
       });
 
-      const [artist, allRecordCopies, allGenres, allYears] = await Promise.all([
-        Artist.findById(req.params.id).exec(),
-        RecordCopy.find().populate("record").exec(),
-        Genre.find().sort({ name: 1 }).exec(),
-        Record.distinct("year"),
-      ]);
-
-      const artistToFilter = new ObjectId(req.params.id);
-
-      const filteredRecords = allRecordCopies.filter((recordCopy) =>
-        recordCopy.record.artist.equals(artistToFilter)
-      );
-
-      res.render("index", {
-        title: `All copies by artist ${artist.name} in stock`,
-        recordCopies: filteredRecords,
-        years: allYears,
-        genres: allGenres,
-        filterType: "artist",
-        id: artist._id,
-      });
+      await renderArtistIndex(res, req.params.id);
     }
   }),
 ];

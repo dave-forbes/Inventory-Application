@@ -2,18 +2,14 @@ const RecordCopy = require("../models/recordCopy");
 const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
 const Artist = require("../models/artist");
-const Genre = require("../models/genre");
 const { body, validationResult } = require("express-validator");
 const passwordCheck = require("../javascripts/passwordCheck");
+const getIndexData = require("../javascripts/getIndexData");
 
-// Display list of all RecordCopies.
+// Display list of all RecordCopies for specific record.
 exports.recordcopy_list = asyncHandler(async (req, res, next) => {
   const record = await Record.findById(req.params.id).exec();
-  const [allRecordCopies, allGenres, allYears] = await Promise.all([
-    RecordCopy.find().populate("record").exec(),
-    Genre.find().sort({ name: 1 }).exec(),
-    Record.distinct("year"),
-  ]);
+  const { allRecordCopies, allGenres, uniqueDecades } = await getIndexData();
 
   const filteredRecords = allRecordCopies.filter(
     (recordCopy) => recordCopy.record.title == record.title
@@ -22,7 +18,7 @@ exports.recordcopy_list = asyncHandler(async (req, res, next) => {
   res.render("index", {
     title: `All copies of ${record.title} in stock`,
     recordCopies: filteredRecords,
-    years: allYears,
+    decades: uniqueDecades,
     genres: allGenres,
     filterType: "record",
   });
@@ -80,7 +76,7 @@ exports.recordcopy_create_post = [
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-    // Create a BookInstance object with escaped and trimmed data.
+    // Create a record copy object with escaped and trimmed data.
     const recordCopy = new RecordCopy({
       record: req.body.record,
       catalogNum: req.body.catalogNum,

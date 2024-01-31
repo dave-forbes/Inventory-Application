@@ -11,19 +11,16 @@ const path = require("path");
 const fs = require("fs");
 const arrayShuffle = require("../javascripts/arrayShuffle");
 const passwordCheck = require("../javascripts/passwordCheck");
+const getIndexData = require("../javascripts/getIndexData");
 
 // Display list of all records.
 exports.index = asyncHandler(async (req, res, next) => {
-  const [allRecordCopies, allGenres, allYears] = await Promise.all([
-    RecordCopy.find().populate("record").exec(),
-    Genre.find().sort({ name: 1 }).exec(),
-    Record.distinct("year"),
-  ]);
+  const { allRecordCopies, allGenres, uniqueDecades } = await getIndexData();
 
   res.render("index", {
     title: "All records copies in stock",
     recordCopies: arrayShuffle(allRecordCopies),
-    years: allYears,
+    decades: uniqueDecades,
     genres: allGenres,
   });
 });
@@ -187,42 +184,30 @@ exports.record_delete_post = [
   (req, res, next) => passwordCheck(req, res, next),
 
   asyncHandler(async (req, res, next) => {
-    try {
-      const recordId = req.params.id;
+    const record = await Record.findById(req.params.id);
 
-      // Fetch the record from the database to get the associated image filename
-      const record = await Record.findById(recordId);
+    const parentDir = path.resolve(__dirname, "..");
 
-      if (!record) {
-        return res.status(404).json({ error: "Record not found" });
+    // Delete the associated image file
+    const imagePath = path.join(parentDir, "public", record.img);
+    const defaultImagePath = path.join(
+      parentDir,
+      "public",
+      "/images/default_cover_image.jpeg"
+    );
+
+    if (imagePath !== defaultImagePath) {
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+        console.log("Image deleted successfully");
+      } else {
+        console.log("Image not found");
       }
-
-      const parentDir = path.resolve(__dirname, "..");
-
-      // Delete the associated image file
-      const imagePath = path.join(parentDir, "public", record.img);
-      const defaultImagePath = path.join(
-        parentDir,
-        "public",
-        "/images/default_cover_image.jpeg"
-      );
-
-      if (imagePath !== defaultImagePath) {
-        if (fs.existsSync(imagePath)) {
-          fs.unlinkSync(imagePath);
-          console.log("Image deleted successfully");
-        } else {
-          console.log("Image not found");
-        }
-      }
-
-      // Delete the record from the database
-      await Record.findByIdAndDelete(recordId);
-      res.redirect("/");
-    } catch (error) {
-      console.error(error);
-      res.render("error", { error: error });
     }
+
+    // Delete the record from the database
+    await Record.findByIdAndDelete(req.params.id);
+    res.redirect("/");
   }),
 ];
 
