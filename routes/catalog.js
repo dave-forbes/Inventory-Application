@@ -8,7 +8,7 @@ const genre_controller = require("../controllers/genreController");
 const record_copy_controller = require("../controllers/recordCopyController");
 const year_controller = require("../controllers/yearController");
 
-/// record ROUTES ///
+/// RECORD ROUTES ///
 
 // GET catalog home page.
 router.get("/", record_controller.index);
@@ -34,10 +34,7 @@ router.post("/record/:id/update", record_controller.record_update_post);
 // GET request for one record.
 router.get("/record/:id", record_controller.record_detail);
 
-// GET request for list of all record items.
-// router.get("/records", record_controller.record_list);
-
-/// AUTHOR ROUTES ///
+/// ARTIST ROUTES ///
 
 // GET request for creating Artist. NOTE This must come before route for id (i.e. display artist).
 router.get("/artist/create", artist_controller.artist_create_get);
@@ -63,7 +60,7 @@ router.get("/artist/:id", artist_controller.artist_detail);
 // GET request for list of all artists, filtered by first letter.
 router.get("/artists/:id", artist_controller.artist_list);
 
-// /// GENRE ROUTES ///
+/// GENRE ROUTES ///
 
 // GET request for creating a Genre. NOTE This must come before route that displays Genre (uses id).
 router.get("/genre/create", genre_controller.genre_create_get);
@@ -86,10 +83,7 @@ router.post("/genre/:id/update", genre_controller.genre_update_post);
 // GET request for one Genre.
 router.get("/genre/:id", genre_controller.genre_detail);
 
-// // GET request for list of all Genre.
-// router.get("/genres", genre_controller.genre_list);
-
-// /// recordINSTANCE ROUTES ///
+// /// RECORD COPY ROUTES ///
 
 // GET request for creating a record copy. NOTE This must come before route that displays RecordCopy (uses id).
 router.get("/recordcopy/create", record_copy_controller.recordcopy_create_get);
@@ -129,6 +123,8 @@ router.get("/recordcopy/:id", record_copy_controller.recordcopy_detail);
 
 // GET request for list of all recordcopy.
 router.get("/recordcopies/:id", record_copy_controller.recordcopy_list);
+
+// DECADE ROUTE
 
 router.get("/year/:id", year_controller.year_list);
 
