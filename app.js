@@ -13,7 +13,7 @@ const app = express();
 const mongoose = require("mongoose");
 let mongoDBString;
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.MONGODB_URI) {
   mongoDBString = process.env.MONGODB_URI;
 } else {
   mongoDBString = require("./mongoDB");
