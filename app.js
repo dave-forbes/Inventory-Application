@@ -12,20 +12,13 @@ const app = express();
 // Set up mongoose connection
 const mongoose = require("mongoose");
 require("dotenv").config();
-let mongoURI;
-if (process.env.MONGODB_URI) {
-  // production
-  mongoURI = process.env.MONGODB_URI;
-} else {
-  // development
-  mongoURI = process.env.MONGODB_URI;
-}
+
 mongoose.set("strictQuery", false);
 main().catch((err) => console.error("MongoDB connection error:", err));
 
 async function main() {
   try {
-    await mongoose.connect(mongoURI);
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log("Connected to MongoDB");
   } catch (error) {
     console.error("MongoDB connection error:", error);
